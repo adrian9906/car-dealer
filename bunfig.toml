@@ -1,0 +1,15 @@
+[install]
+cache = true
+exact = false
+production = false
+optional = true
+
+[install.scopes]
+"@radix-ui" = "https://registry.npmjs.org/"
+"@hookform" = "https://registry.npmjs.org/"
+
+[run]
+bun = true
+
+[test]
+preload = ["./test/setup.ts"]

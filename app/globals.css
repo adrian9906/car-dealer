@@ -1,0 +1,231 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Actualizando colores a azul marino premium para diseño exclusivo */
+  --background: #eaecc6; /* Blanco con tinte azul muy sutil */
+  --foreground: #2bc0e4; /* Azul marino muy oscuro */
+  --card: oklch(0.96 0.01 240); /* Gris muy claro con tinte azul */
+  --card-foreground: oklch(0.15 0.08 240); /* Azul marino muy oscuro */
+  --popover: oklch(0.98 0.005 240); /* Blanco con tinte azul muy sutil */
+  --popover-foreground: oklch(0.15 0.08 240); /* Azul marino muy oscuro */
+  --primary: oklch(0.25 0.12 240); /* Azul marino premium */
+  --primary-foreground: oklch(0.98 0.005 240); /* Blanco con tinte azul */
+  --secondary: oklch(0.45 0.06 240); /* Azul gris medio */
+  --secondary-foreground: oklch(0.98 0.005 240); /* Blanco con tinte azul */
+  --muted: oklch(0.94 0.015 240); /* Gris claro con tinte azul */
+  --muted-foreground: oklch(0.4 0.04 240); /* Azul gris */
+  --accent: oklch(0.35 0.1 240); /* Azul marino medio para acentos */
+  --accent-foreground: oklch(0.98 0.005 240); /* Blanco con tinte azul */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0.02 240); /* Gris claro con tinte azul */
+  --input: oklch(0.98 0.005 240); /* Blanco con tinte azul muy sutil */
+  --ring: oklch(0.35 0.1 240 / 0.5); /* Azul marino con opacidad */
+  --chart-1: oklch(0.25 0.12 240); /* Azul marino premium */
+  --chart-2: oklch(0.4 0.04 240); /* Azul gris */
+  --chart-3: oklch(0.577 0.245 27.325); /* Naranja */
+  --chart-4: oklch(0.15 0.08 240); /* Azul marino muy oscuro */
+  --chart-5: oklch(0.35 0.1 240); /* Azul marino medio */
+  --radius: 0.5rem;
+  --sidebar: oklch(0.96 0.01 240); /* Gris muy claro con tinte azul */
+  --sidebar-foreground: oklch(0.15 0.08 240); /* Azul marino muy oscuro */
+  --sidebar-primary: oklch(0.98 0.005 240); /* Blanco con tinte azul */
+  --sidebar-primary-foreground: oklch(
+    0.15 0.08 240
+  ); /* Azul marino muy oscuro */
+  --sidebar-accent: oklch(0.35 0.1 240); /* Azul marino medio */
+  --sidebar-accent-foreground: oklch(
+    0.98 0.005 240
+  ); /* Blanco con tinte azul */
+  --sidebar-border: oklch(0.9 0.02 240); /* Gris claro con tinte azul */
+  --sidebar-ring: oklch(0.35 0.1 240 / 0.5); /* Azul marino con opacidad */
+}
+
+.dark {
+  /* Modo oscuro con azul marino premium */
+  --background: oklch(11.848% 0.04703 265.093);
+  --foreground: #89253e; /* Blanco con tinte azul */
+  --card: oklch(0.12 0.03 240); /* Azul marino oscuro */
+  --card-foreground: oklch(0.95 0.01 240); /* Blanco con tinte azul */
+  --popover: oklch(0.12 0.03 240); /* Azul marino oscuro */
+  --popover-foreground: oklch(0.95 0.01 240); /* Blanco con tinte azul */
+  --primary: oklch(48.489% 0.27507 288.159); /* Azul claro premium */
+  --primary-foreground: oklch(0.08 0.02 240); /* Azul marino muy oscuro */
+  --secondary: oklch(0.2 0.04 240); /* Azul marino medio oscuro */
+  --secondary-foreground: oklch(0.95 0.01 240); /* Blanco con tinte azul */
+  --muted: oklch(0.16 0.03 240); /* Azul marino medio */
+  --muted-foreground: oklch(0.7 0.02 240); /* Azul gris claro */
+  --accent: oklch(0.5 0.06 240); /* Azul medio para acentos */
+  --accent-foreground: oklch(0.08 0.02 240); /* Azul marino muy oscuro */
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.2 0.04 240); /* Azul marino medio oscuro */
+  --input: oklch(0.16 0.03 240); /* Azul marino medio */
+  --ring: oklch(0.5 0.06 240 / 0.5); /* Azul medio con opacidad */
+  --chart-1: oklch(0.6 0.08 240); /* Azul claro premium */
+  --chart-2: oklch(0.7 0.02 240); /* Azul gris claro */
+  --chart-3: oklch(0.769 0.188 70.08); /* Amarillo */
+  --chart-4: oklch(0.5 0.06 240); /* Azul medio */
+  --chart-5: oklch(0.645 0.246 16.439); /* Naranja */
+  --sidebar: oklch(0.12 0.03 240); /* Azul marino oscuro */
+  --sidebar-foreground: oklch(0.95 0.01 240); /* Blanco con tinte azul */
+  --sidebar-primary: oklch(0.6 0.08 240); /* Azul claro premium */
+  --sidebar-primary-foreground: oklch(
+    0.08 0.02 240
+  ); /* Azul marino muy oscuro */
+  --sidebar-accent: oklch(0.2 0.04 240); /* Azul marino medio oscuro */
+  --sidebar-accent-foreground: oklch(0.95 0.01 240); /* Blanco con tinte azul */
+  --sidebar-border: oklch(0.2 0.04 240); /* Azul marino medio oscuro */
+  --sidebar-ring: oklch(0.4 0.04 240); /* Azul gris */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* Actualizando fuentes a Share Tech Mono e Inter */
+  --font-mono: var(--font-share-tech-mono);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-inter);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* Agregando estilos mejorados para animaciones de scroll persistentes y botones flotantes inteligentes */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  /* Mantener la animación visible después de la primera vez */
+  animation: none;
+}
+
+/* Estilos para botones flotantes inteligentes */
+.scroll-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 20px hsl(var(--primary) / 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.scroll-button:hover {
+  background: hsl(var(--primary) / 0.9);
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px hsl(var(--primary) / 0.35);
+}
+
+.scroll-button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .scroll-button {
+    width: 2.75rem;
+    height: 2.75rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+/* Estilos adicionales para mejorar la experiencia visual */
+.hero-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    hsl(var(--background) / 0.1) 100%
+  );
+  pointer-events: none;
+}
+
+/* Mejoras para la navegación estilo DONGFENG */
+.nav-dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-dropdown.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Animaciones suaves para cards */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px hsl(var(--primary) / 0.15);
+}

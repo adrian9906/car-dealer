@@ -1,0 +1,13 @@
+{
+  "typescript.preferences.packageManager": "bun",
+  "npm.packageManager": "bun",
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "files.associations": {
+    "bunfig.toml": "toml"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
