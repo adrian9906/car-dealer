@@ -1,0 +1,531 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+// Entidades Principales
+model Empresa {
+  id_empresa        String       @id @default(uuid())
+  nombre            String
+  direccion         String
+  telefono          String
+  email             String
+  rnc               String    @unique
+  fecha_fundacion   DateTime
+  cuentas_bancarias CuentaBancaria[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("empresa")
+}
+
+model Proveedor {
+  id_proveedor      String          @id @default(uuid())
+  nombre            String
+  pais              String
+  direccion         String
+  telefono          String
+  email             String
+  tipo_proveedor    TipoProveedor
+  importaciones     Importacion[]
+  importaciones_cliente ImportacionCliente[]
+  autos             Auto[]
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@map("proveedor")
+}
+
+model Auto {
+  id_auto                 String               @id @default(uuid())
+  id_proveedor            String?
+  id_importacion          String?
+  id_importacion_cliente  String?
+  id_cliente_propietario  String?
+  proveedor               Proveedor?        @relation(fields: [id_proveedor], references: [id_proveedor])
+  importacion             Importacion?      @relation(fields: [id_importacion], references: [id_importacion])
+  importacion_cliente     ImportacionCliente? 
+  cliente_propietario     Cliente?          @relation(fields: [id_cliente_propietario], references: [id_cliente])
+  marca                   String
+  modelo                  String
+  año                     Int
+  color                   String
+  tipo_combustible        TipoCombustible
+  transmision             TipoTransmision
+  precio_compra           Float
+  precio_venta            Float?
+  imagen                  String?
+  estado_auto             EstadoAuto
+  matricula_cubana        String?           @unique
+  vin                     String            @unique
+  kilometraje             Int               @default(0)
+  tipo_propiedad          TipoPropiedad
+  fecha_llegada_cuba      DateTime?
+  ventas                  Venta[]
+  alquileres              Alquiler[]
+  mantenimientos          Mantenimiento[]
+  stock                   Stock
+  category                Category
+  features                String
+  description             String?
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+
+
+  @@map("auto")
+}
+
+model Cliente {
+  id_cliente          String                   @id @default(uuid())
+  nombre              String
+  apellidos           String
+  ci                  String                @unique
+  direccion           String
+  telefono            String
+  email               String
+  tipo_cliente        TipoCliente
+  fecha_registro      DateTime              @default(now())
+  cliente_importador  ClienteImportador?
+  importaciones_cliente ImportacionCliente[]
+  autos_propiedad     Auto[]
+  ventas              Venta[]
+  alquileres          Alquiler[]
+  facturas            Factura[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  @@map("cliente")
+}
+
+model ClienteImportador {
+  id_cliente_importador   String       @id @default(uuid())
+  id_cliente              String       @unique
+  licencia_importacion    String    @unique
+  fecha_registro          DateTime  @default(now())
+  limite_importacion      Int
+  autos_importados_actual Int       @default(0)
+  estado_licencia         EstadoLicencia
+  observaciones           String?
+  
+  cliente                 Cliente   @relation(fields: [id_cliente], references: [id_cliente])
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  @@map("cliente_importador")
+}
+
+// Procesos de Importación
+model Importacion {
+  id_importacion      String          @id @default(uuid())
+  id_proveedor        String
+  proveedor           Proveedor    @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: Cascade)
+  fecha_salida        DateTime
+  fecha_llegada       DateTime?
+  puerto_salida       String
+  puerto_llegada      String
+  cantidad_autos      Int
+  costo_transporte    Float
+  costo_aduana        Float
+  estado_importacion  EstadoImportacion
+  numero_contenedor   String?      @unique
+  autos               Auto[]
+  transacciones       Transaccion[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("importacion")
+}
+
+model ImportacionCliente {
+  id_importacion_cliente String          @id @default(uuid())
+  id_cliente           String
+  id_proveedor         String?
+  id_auto              String?     @unique     
+  
+  // Relaciones
+  cliente              Cliente        @relation(fields: [id_cliente], references: [id_cliente])
+  proveedor            Proveedor?     @relation(fields: [id_proveedor], references: [id_proveedor])
+  auto                 Auto?          @relation(fields: [id_auto], references: [id_auto])
+  
+  fecha_solicitud      DateTime       @default(now())
+  fecha_estimada_llegada DateTime?
+  costo_importacion    Float
+  estado_solicitud     EstadoSolicitudImportacion
+  servicios_adicionales String?
+  comision_empresa     Float
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  @@map("importacion_cliente")
+}
+
+
+model Venta {
+  id_venta            String          @id @default(uuid())
+  id_auto             String          @unique
+  id_cliente          String
+  id_empleado         String
+  auto                Auto         @relation(fields: [id_auto], references: [id_auto])
+  cliente             Cliente      @relation(fields: [id_cliente], references: [id_cliente])
+  empleado            Empleado     @relation(fields: [id_empleado], references: [id_empleado])
+  
+  fecha_venta         DateTime     @default(now())
+  precio_venta        Float
+  forma_pago          FormaPago
+  comision_vendedor   Float
+  impuestos           Float
+  estado_venta        EstadoVenta
+  
+  facturas            Factura[]
+  transacciones       Transaccion[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("venta")
+}
+
+model Alquiler {
+  id_alquiler         String          @id @default(uuid())
+  id_auto             String
+  id_cliente          String
+  auto                Auto         @relation(fields: [id_auto], references: [id_auto])
+  cliente             Cliente      @relation(fields: [id_cliente], references: [id_cliente])
+  fecha_inicio        DateTime
+  fecha_fin           DateTime
+  precio_diario       Float
+  deposito_garantia   Float
+  estado_alquiler     EstadoAlquiler
+  kilometraje_inicio  Int
+  kilometraje_fin     Int?
+  observaciones       String?
+  facturas            Factura[]
+  transacciones       Transaccion[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("alquiler")
+}
+
+// Entidades Administrativas
+model Empleado {
+  id_empleado         String          @id @default(uuid())
+  nombre              String
+  apellidos           String
+  ci                  String       @unique
+  cargo               CargoEmpleado
+  telefono            String
+  email               String
+  fecha_contratacion  DateTime     @default(now())
+  salario             Float
+  
+  ventas              Venta[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("empleado")
+}
+
+model Mantenimiento {
+  id_mantenimiento    String          @id @default(uuid())
+  id_auto             String
+  
+  auto                Auto         @relation(fields: [id_auto], references: [id_auto])
+  
+  fecha_mantenimiento DateTime
+  tipo_mantenimiento  TipoMantenimiento
+  descripcion         String
+  costo               Float
+  taller              String
+  proximo_mantenimiento DateTime?
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("mantenimiento")
+}
+
+model CuentaBancaria {
+  id_cuenta           String          @id @default(uuid())
+  id_empresa          String
+  
+  empresa             Empresa      @relation(fields: [id_empresa], references: [id_empresa])
+  
+  banco               String
+  numero_cuenta       String       @unique
+  tipo_cuenta         TipoCuenta
+  moneda              Moneda
+  saldo_actual        Float        @default(0)
+  fecha_apertura      DateTime     @default(now())
+  estado_cuenta       EstadoCuenta
+  
+  transacciones       Transaccion[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("cuenta_bancaria")
+}
+
+model Transaccion {
+  id_transaccion      String          @id @default(uuid())
+  id_cuenta           String
+  id_venta            String?
+  id_alquiler         String?
+  id_importacion      String?
+  cuenta              CuentaBancaria @relation(fields: [id_cuenta], references: [id_cuenta])
+  venta               Venta?       @relation(fields: [id_venta], references: [id_venta])
+  alquiler            Alquiler?    @relation(fields: [id_alquiler], references: [id_alquiler])
+  importacion         Importacion? @relation(fields: [id_importacion], references: [id_importacion])
+  tipo_transaccion    TipoTransaccion
+  monto               Float
+  moneda              Moneda
+  fecha_transaccion   DateTime     @default(now())
+  descripcion         String
+  beneficiario        String
+  metodo_pago         MetodoPago
+  numero_comprobante  String?      @unique
+  estado_transaccion  EstadoTransaccion
+  
+  impuestos           Impuesto[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("transaccion")
+}
+
+model Factura {
+  id_factura          String          @id @default(uuid())
+  id_cliente          String
+  id_venta            String?
+  id_alquiler         String?
+  
+  // Relaciones
+  cliente             Cliente      @relation(fields: [id_cliente], references: [id_cliente])
+  venta               Venta?       @relation(fields: [id_venta], references: [id_venta])
+  alquiler            Alquiler?    @relation(fields: [id_alquiler], references: [id_alquiler])
+  
+  // Atributos
+  numero_factura      String       @unique
+  fecha_emision       DateTime     @default(now())
+  subtotal            Float
+  impuestos_factura   Float
+  total               Float
+  estado_factura      EstadoFactura
+  fecha_vencimiento   DateTime?
+  forma_pago          FormaPago
+  
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("factura")
+}
+
+model Impuesto {
+  id_impuesto         String          @id @default(uuid())
+  id_transaccion      String
+  transaccion         Transaccion  @relation(fields: [id_transaccion], references: [id_transaccion])
+  tipo_impuesto       TipoImpuesto
+  tasa_porcentaje     Float
+  monto_impuesto      Float
+  periodo             String
+  fecha_pago          DateTime?
+  estado_impuesto     EstadoImpuesto
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@map("impuesto")
+}
+
+// Enums
+enum TipoProveedor {
+  NUEVO
+  USADO
+}
+
+enum EstadoBarco {
+  ACTIVO
+  INACTIVO
+  MANTENIMIENTO
+}
+
+enum TipoCombustible {
+  GASOLINA
+  DIESEL
+  ELECTRICO
+  HIBRIDO
+}
+
+enum TipoTransmision {
+  MANUAL
+  AUTOMATICA
+}
+
+enum EstadoAuto {
+  DISPONIBLE
+  VENDIDO
+  ALQUILADO
+  EN_IMPORTACION
+  MANTENIMIENTO
+  RESERVADO
+}
+
+enum TipoPropiedad {
+  EMPRESA
+  CLIENTE
+}
+
+enum TipoCliente {
+  NACIONAL
+  EXTRANJERO
+  IMPORTADOR
+}
+
+enum EstadoLicencia {
+  ACTIVA
+  VENCIDA
+  SUSPENDIDA
+}
+
+enum EstadoImportacion {
+  PENDIENTE
+  EN_TRANSITO
+  EN_ADUANA
+  COMPLETADA
+  CANCELADA
+}
+
+enum EstadoSolicitudImportacion {
+  PENDIENTE
+  APROBADA
+  EN_TRANSITO
+  COMPLETADA
+  RECHAZADA
+}
+
+enum FormaPago {
+  EFECTIVO
+  TRANSFERENCIA
+  TARJETA
+  MIXTO
+}
+
+enum EstadoVenta {
+  PENDIENTE
+  COMPLETADA
+  CANCELADA
+}
+
+enum EstadoAlquiler {
+  ACTIVO
+  COMPLETADO
+  CANCELADO
+}
+
+enum CargoEmpleado {
+  VENDEDOR
+  GERENTE
+  ADMINISTRATIVO
+  MECANICO
+  IMPORTADOR
+}
+
+enum TipoMantenimiento {
+  PREVENTIVO
+  CORRECTIVO
+  LAVADO
+  REVISION
+}
+
+enum TipoCuenta {
+  CORRIENTE
+  AHORRO
+}
+
+enum Moneda {
+  CUP
+  MLC
+  USD
+}
+
+enum EstadoCuenta {
+  ACTIVA
+  INACTIVA
+  BLOQUEADA
+}
+
+enum TipoTransaccion {
+  INGRESO
+  EGRESO
+}
+
+enum Stock{
+  LOCAL
+  IMPORT
+}
+
+enum Category{
+  SEDAN
+  SUV
+  PICKUP
+  COMPACT
+}
+
+enum MetodoPago {
+  EFECTIVO
+  TRANSFERENCIA
+  TARJETA_CREDITO
+  TARJETA_DEBITO
+  CHEQUE
+}
+
+enum EstadoTransaccion {
+  PENDIENTE
+  COMPLETADA
+  RECHAZADA
+  REVERTIDA
+}
+
+enum EstadoFactura {
+  PAGADA
+  PENDIENTE
+  VENCIDA
+  CANCELADA
+}
+
+enum TipoGasto {
+  NOMINA
+  ALQUILER
+  SERVICIOS
+  MANTENIMIENTO
+  PUBLICIDAD
+  IMPUESTOS
+  OTROS
+}
+
+enum Periodicidad {
+  UNICO
+  MENSUAL
+  TRIMESTRAL
+  ANUAL
+}
+
+enum EstadoGasto {
+  ACTIVO
+  INACTIVO
+}
+
+enum TipoImpuesto {
+  VENTAS
+  IMPORTACION
+  RENTA
+  SERVICIOS
+}
+
+enum EstadoImpuesto {
+  PAGADO
+  PENDIENTE
+  MOROSO
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,7 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -31,160 +33,57 @@ import {
   Fuel,
   Calendar,
   Settings,
+  Star,
 } from "lucide-react";
 import Link from "next/link";
+import AutoCard from "./autoCard";
+import { useFavorites } from "@/hooks/useFavorites";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createUrl } from "@/lib/utils";
+import { Vehicle } from "@/app/dealer/inventario/page";
 
-// Mock data for vehicles
-const vehicles = [
-  {
-    id: 1,
-    brand: "Toyota",
-    model: "Corolla",
-    year: 2020,
-    price: 18500,
-    category: "sedan",
-    location: "local",
-    mileage: 45000,
-    fuel: "Gasolina",
-    transmission: "Automático",
-    color: "Blanco",
-    image: "/toyota-corolla-blanco.png",
-    features: ["A/C", "Radio", "Airbags", "ABS"],
-  },
-  {
-    id: 2,
-    brand: "Honda",
-    model: "CR-V",
-    year: 2019,
-    price: 24000,
-    category: "suv",
-    location: "import",
-    mileage: 38000,
-    fuel: "Gasolina",
-    transmission: "Automático",
-    color: "Negro",
-    image: "/honda-crv-negro-suv.png",
-    features: ["A/C", "GPS", "Cámara trasera", "Bluetooth"],
-  },
-  {
-    id: 3,
-    brand: "Ford",
-    model: "F-150",
-    year: 2021,
-    price: 32000,
-    category: "pickup",
-    location: "local",
-    mileage: 25000,
-    fuel: "Gasolina",
-    transmission: "Automático",
-    color: "Azul",
-    image: "/ford-f150-azul.png",
-    features: ["4x4", "A/C", "Caja de carga", "Remolque"],
-  },
-  {
-    id: 4,
-    brand: "Nissan",
-    model: "Sentra",
-    year: 2018,
-    price: 15500,
-    category: "sedan",
-    location: "local",
-    mileage: 52000,
-    fuel: "Gasolina",
-    transmission: "Manual",
-    color: "Rojo",
-    image: "/nissan-sentra-rojo-sedan.png",
-    features: ["A/C", "Radio", "Airbags"],
-  },
-  {
-    id: 5,
-    brand: "Chevrolet",
-    model: "Tahoe",
-    year: 2020,
-    price: 35000,
-    category: "suv",
-    location: "import",
-    mileage: 30000,
-    fuel: "Gasolina",
-    transmission: "Automático",
-    color: "Gris",
-    image: "/chevrolet-tahoe-gris.png",
-    features: ["7 asientos", "A/C", "GPS", "Cámara 360°"],
-  },
-  {
-    id: 6,
-    brand: "Hyundai",
-    model: "Elantra",
-    year: 2019,
-    price: 16800,
-    category: "compact",
-    location: "local",
-    mileage: 41000,
-    fuel: "Gasolina",
-    transmission: "Automático",
-    color: "Plata",
-    image: "/hyundai-elantra-plata-compacto.png",
-    features: ["A/C", "Bluetooth", "USB", "Airbags"],
-  },
-];
-
-export default function Inventory() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedLocation, setSelectedLocation] = useState("all");
-  const [priceRange, setPriceRange] = useState([10000, 50000]);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+export default function Inventory({
+  brands,
+  models,
+  vehicles,
+  total,
+}: {
+  brands: string[];
+  models: string[];
+  vehicles: Vehicle[];
+  total: number;
+}) {
+  const searchParams = useSearchParams();
+  const selectedCategory = searchParams.get("category") || "Todos los modelos";
+  const selectedLocation = searchParams.get("stock") || "all";
+  const [priceRange, setPriceRange] = useState([10000, 100000]);
+  const selectedBrands = searchParams.get("brand")?.split(",") || [];
   const [sortBy, setSortBy] = useState("price-asc");
+  const favorites = useFavorites();
+  const router = useRouter();
 
-  // Filter vehicles based on current filters
-  const filteredVehicles = vehicles.filter((vehicle) => {
-    const matchesSearch =
-      vehicle.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      vehicle.model.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || vehicle.category === selectedCategory;
-    const matchesLocation =
-      selectedLocation === "all" || vehicle.location === selectedLocation;
-    const matchesPrice =
-      vehicle.price >= priceRange[0] && vehicle.price <= priceRange[1];
-    const matchesBrand =
-      selectedBrands.length === 0 || selectedBrands.includes(vehicle.brand);
+  const handleBrandChange = (brand: string) => {
+    const newParams = new URLSearchParams(searchParams.toString());
 
-    return (
-      matchesSearch &&
-      matchesCategory &&
-      matchesLocation &&
-      matchesPrice &&
-      matchesBrand
-    );
-  });
-
-  // Sort vehicles
-  const sortedVehicles = [...filteredVehicles].sort((a, b) => {
-    switch (sortBy) {
-      case "price-asc":
-        return a.price - b.price;
-      case "price-desc":
-        return b.price - a.price;
-      case "year-desc":
-        return b.year - a.year;
-      case "mileage-asc":
-        return a.mileage - b.mileage;
-      default:
-        return 0;
-    }
-  });
-
-  const brands = Array.from(new Set(vehicles.map((v) => v.brand)));
-
-  const handleBrandChange = (brand: string, checked: boolean) => {
-    if (checked) {
-      setSelectedBrands([...selectedBrands, brand]);
+    if (selectedBrands.includes(brand)) {
+      const prev = selectedBrands.filter((brand) => brand !== brand);
+      newParams.set("brand", prev.join(","));
+      router.push(createUrl("/dealer/inventario", newParams));
     } else {
-      setSelectedBrands(selectedBrands.filter((b) => b !== brand));
+      newParams.set("brand", [...selectedBrands, brand].join(","));
+      router.push(createUrl("/dealer/inventario", newParams));
     }
   };
-
+  function handleFilter(name: string, value: string | null) {
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (value === null) {
+      newParams.delete(name);
+    }
+    if (typeof value === "string") {
+      newParams.set(name, value);
+    }
+    router.push(createUrl("/dealer/inventario", newParams));
+  }
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
@@ -212,16 +111,32 @@ export default function Inventory() {
               {/* Search */}
               <div>
                 <label className="text-sm font-medium mb-2 block font-serif">
-                  Buscar
+                  Modelo
                 </label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    placeholder="Marca o modelo..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
+                  <Select
+                    onValueChange={(value) => {
+                      handleFilter("modelo", value);
+                    }}
+                  >
+                    <SelectTrigger className="w-[200px]">
+                      <SelectValue
+                        placeholder="Selecciona un modelo"
+                        className="text-sm font-medium mb-2 block font-serif"
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Modelos</SelectLabel>
+                        {models.map((value, index) => (
+                          <SelectItem key={index} value={value}>
+                            {value}
+                          </SelectItem>
+                        ))}
+                        <SelectItem value="all">Todos los modelos</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
@@ -232,17 +147,19 @@ export default function Inventory() {
                 </label>
                 <Select
                   value={selectedCategory}
-                  onValueChange={setSelectedCategory}
+                  onValueChange={(value) => {
+                    handleFilter("category", value);
+                  }}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Todas las categorías" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Todas las categorías</SelectItem>
-                    <SelectItem value="sedan">Sedanes</SelectItem>
-                    <SelectItem value="suv">SUVs</SelectItem>
-                    <SelectItem value="pickup">Camionetas</SelectItem>
-                    <SelectItem value="compact">Compactos</SelectItem>
+                    <SelectItem value="SEDAN">Sedanes</SelectItem>
+                    <SelectItem value="SUV">SUVs</SelectItem>
+                    <SelectItem value="PICKUP">Camionetas</SelectItem>
+                    <SelectItem value="COMPACT">Compactos</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -254,15 +171,17 @@ export default function Inventory() {
                 </label>
                 <Select
                   value={selectedLocation}
-                  onValueChange={setSelectedLocation}
+                  onValueChange={(value) => {
+                    handleFilter("stock", value);
+                  }}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Todas las ubicaciones" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Todas las ubicaciones</SelectItem>
-                    <SelectItem value="local">Stock Local</SelectItem>
-                    <SelectItem value="import">Importación USA</SelectItem>
+                    <SelectItem value="LOCAL">Stock Local</SelectItem>
+                    <SelectItem value="IMPORT">Importación USA</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -275,8 +194,12 @@ export default function Inventory() {
                 </label>
                 <Slider
                   value={priceRange}
-                  onValueChange={setPriceRange}
-                  max={50000}
+                  onValueChange={(value) => {
+                    setPriceRange(value);
+                    handleFilter("price_min", priceRange[0].toString());
+                    handleFilter("price_max", priceRange[1].toString());
+                  }}
+                  max={100000}
                   min={10000}
                   step={1000}
                   className="mt-2"
@@ -294,9 +217,8 @@ export default function Inventory() {
                       <Checkbox
                         id={brand}
                         checked={selectedBrands.includes(brand)}
-                        onCheckedChange={(checked) =>
-                          handleBrandChange(brand, checked as boolean)
-                        }
+                        onCheckedChange={() => handleBrandChange(brand)}
+                        className="border-primary"
                       />
                       <label
                         htmlFor={brand}
@@ -312,13 +234,28 @@ export default function Inventory() {
           </Card>
         </div>
 
-        {/* Vehicle Grid */}
         <div className="lg:col-span-3">
           {/* Sort and Results Count */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <p className="text-muted-foreground font-serif">
-              Mostrando {sortedVehicles.length} de {vehicles.length} vehículos
+              Mostrando {vehicles.length} de {total} vehículos
             </p>
+            <div className="flex flex-1 justify-end mx-auto">
+              <Button asChild>
+                <Link href="/dealer/favoritos">
+                  <div className="relative flex items-center gap-1">
+                    {" "}
+                    Favoritos
+                    <Star className="h-4 w-4" />
+                    {favorites > 0 && (
+                      <span className="absolute -top-4 -right-5 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                        {favorites}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              </Button>
+            </div>
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-full max-w-[220px] text-white bg-slate-900 hover:bg-slate-800 dark:bg-slate-100 dark:text-black dark:hover:bg-slate-200">
                 <SelectValue placeholder="Ordenar por..." />
@@ -336,122 +273,13 @@ export default function Inventory() {
 
           {/* Vehicle Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {sortedVehicles.map((vehicle) => (
-              <Card
-                key={vehicle.id}
-                className="group hover:shadow-lg transition-all duration-300 overflow-hidden"
-              >
-                <div className="relative">
-                  <img
-                    src={vehicle.image || "/placeholder.svg"}
-                    alt={`${vehicle.brand} ${vehicle.model}`}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <Badge
-                      variant={
-                        vehicle.location === "local" ? "default" : "secondary"
-                      }
-                      className="bg-background/90"
-                    >
-                      {vehicle.location === "local" ? (
-                        <>
-                          <MapPin className="h-3 w-3 mr-1" />
-                          Stock Local
-                        </>
-                      ) : (
-                        <>
-                          <Ship className="h-3 w-3 mr-1" />
-                          Importación
-                        </>
-                      )}
-                    </Badge>
-                  </div>
-                  <div className="absolute top-3 right-3">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="bg-background/90 hover:bg-background"
-                    >
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <CardHeader className="pb-3">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="font-sans text-lg">
-                        {vehicle.brand} {vehicle.model}
-                      </CardTitle>
-                      <CardDescription className="font-serif">
-                        {vehicle.year} • {vehicle.color}
-                      </CardDescription>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-accent font-sans">
-                        ${vehicle.price.toLocaleString()}
-                      </div>
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="pt-0">
-                  <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mb-4 font-serif">
-                    <div className="flex items-center gap-1">
-                      <Settings className="h-3 w-3" />
-                      {vehicle.transmission}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Fuel className="h-3 w-3" />
-                      {vehicle.fuel}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3" />
-                      {vehicle.mileage.toLocaleString()} km
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {vehicle.features.slice(0, 3).map((feature) => (
-                      <Badge
-                        key={feature}
-                        variant="outline"
-                        className="text-xs"
-                      >
-                        {feature}
-                      </Badge>
-                    ))}
-                    {vehicle.features.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{vehicle.features.length - 3} más
-                      </Badge>
-                    )}
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Link href={`/vehiculo/${vehicle.id}`} className="flex-1">
-                      <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                        <Eye className="h-4 w-4 mr-2" />
-                        Ver Detalles
-                      </Button>
-                    </Link>
-                    <Link href="/cotizar" className="flex-1">
-                      <Button
-                        variant="outline"
-                        className="w-full bg-transparent"
-                      >
-                        Cotizar
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
+            {vehicles.map((vehicle) => (
+              <AutoCard key={vehicle.id_auto} vehicle={vehicle} />
             ))}
           </div>
 
           {/* No Results */}
-          {sortedVehicles.length === 0 && (
+          {vehicles.length === 0 && (
             <div className="text-center py-12">
               <Car className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-foreground mb-2 font-sans">

@@ -4,10 +4,12 @@ import MainContent from "@/components/mainContent";
 export default function HomePage() {
   return (
     <main>
-      {/* Image Carousel Section - Now First */}
-      <ImageCarrusel />
-      {/* Hero Content Section - Now Second */}
-      <MainContent />
+      <div>
+        <ImageCarrusel />
+      </div>
+      <div>
+        <MainContent />
+      </div>
     </main>
   );
 }

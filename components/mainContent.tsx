@@ -44,7 +44,7 @@ export default function MainContent() {
   }, []);
   return (
     <>
-      <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:bg-slate-100 py-16 lg:py-24">
+      <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:bg-gradient-to-br dark:from-slate-50 dark:to-slate-100 dark:bg-slate-100 py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-8">
             <div className="space-y-4">
@@ -220,7 +220,7 @@ export default function MainContent() {
                     Financiamiento disponible
                   </li>
                 </ul>
-                <Link href="/inventario">
+                <Link href="/dealer/inventario">
                   <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-sans">
                     Ver Inventario Local
                   </Button>
@@ -264,7 +264,7 @@ export default function MainContent() {
                     Tiempo de entrega: 4-6 semanas
                   </li>
                 </ul>
-                <Link href="/importacion">
+                <Link href="/dealer/importacion">
                   <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-sans">
                     Solicitar Importación
                   </Button>
@@ -881,7 +881,7 @@ export default function MainContent() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-sans bg-transparent"
+                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-sans dark:hover:bg-primary"
                 >
                   Contactar un Asesor
                 </Button>
@@ -915,7 +915,7 @@ export default function MainContent() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-sans bg-transparent"
+                  className="border-primary text-primary dark:hover:bg-primary hover:bg-primary hover:text-primary-foreground font-sans bg-transparent"
                 >
                   <Mail className="h-5 w-5 mr-2" />
                   Solicitar Cotización
