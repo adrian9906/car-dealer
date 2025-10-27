@@ -31,3 +31,29 @@ export function handleSearchParams(
   }
   return newParams
 }
+
+export function formatDate(input: string | number | Date, options?: Intl.DateTimeFormatOptions): string {
+  const date = input instanceof Date ? input : new Date(input)
+  return date.toLocaleDateString('es-ES', options ?? {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
+export function createQueryString(
+  searchParams: URLSearchParams | ReadonlyURLSearchParams,
+  params: Record<string, string | number | null>
+) {
+  const newSearchParams = new URLSearchParams(searchParams?.toString())
+
+  for (const [key, value] of Object.entries(params)) {
+    if (value === null || value === '') {
+      newSearchParams.delete(key)
+    } else {
+      newSearchParams.set(key, String(value))
+    }
+  }
+
+  return newSearchParams.toString()
+}

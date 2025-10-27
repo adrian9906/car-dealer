@@ -1,9 +1,18 @@
 'use server'
 
-import { PrismaClient } from '@prisma/client'
+import { ImportacionCliente, Prisma, PrismaClient } from '@prisma/client'
 import { db } from '../db'
 import { PageParams } from '@/app/dealer/inventario/page'
-
+import { EstadoSolicitudImportacion } from '../import'
+import { DatabaseConnectionError, EntityNotFound, InvalidParameterError } from '../exceptions/db'
+import { PriceExport } from '@/components/importacion/importForm'
+type getImportParams = {
+    q?: string,
+    limit?: number,
+    page?: number,
+    sort?: keyof ImportacionCliente | string,
+    dir?: 'asc' | 'desc'
+}
 export async function getBrands() {
     try {
         const brands = await db.auto.findMany({
@@ -196,4 +205,217 @@ export async function getVehiclesTotal() {
     }
 }
 
+export interface FormDataImport {
+    name: string;
+    nameAuto: string;
+    email: string;
+    tel: string;
+    model: string;
+    costo_importacion: number;
+    request?: string;
+    condition: string;
+    year?: string;
+    apellidos: string,
+    ci: string,
+    direccion: string
+}
 
+export async function CreateClientImport(formData: FormDataImport, estimatedCost: PriceExport) {
+    try {
+        const {
+            name,
+            nameAuto,
+            email,
+            tel,
+            model,
+            costo_importacion,
+            request,
+            condition,
+            year,
+            direccion,
+            ci,
+            apellidos
+        } = formData;
+
+        const cliente = await db.cliente.findFirst({
+            where: {
+                nombre: name,
+                email: email,
+                telefono: tel,
+            },
+        });
+        let clienteID = cliente?.id_cliente
+        if (!cliente) {
+            const cliente = await db.cliente.create({
+                data: {
+                    email,
+                    nombre: name,
+                    telefono: tel,
+                    tipo_cliente: 'NACIONAL',
+                    direccion,
+                    ci,
+                    apellidos
+                }
+            })
+            clienteID = cliente?.id_cliente
+        }
+        const auto = await db.auto.findFirst({
+            where: {
+                marca: nameAuto,
+                modelo: model
+            },
+        });
+        if (!auto) {
+            throw new Error('El auto no existe');
+        }
+        if (clienteID) {
+            const client = await db.importacionCliente.create({
+                data: {
+                    costo_importacion: estimatedCost.total,
+                    id_auto: auto.id_auto,
+                    id_cliente: clienteID,
+                    estado_solicitud: 'PENDIENTE',
+                    servicios_adicionales: request,
+                    condition,
+
+
+
+
+                },
+            });
+
+            return client;
+        }
+        else {
+            return null
+        }
+    }
+    catch (error) {
+        console.error(error);
+        return null;
+    }
+
+}
+
+
+export async function getImportData({ q = '', limit = 10, page = 1, sort = 'id_importacion_cliente', dir = 'asc' }: getImportParams) {
+    try {
+
+        if (limit < 1 || page < 1) {
+            throw new InvalidParameterError('Algunos de los parámetros no es correcto.');
+        }
+
+        if (!['asc', 'desc'].includes(dir)) {
+            throw new InvalidParameterError('Dirección de ordenamiento inválida. Debe ser "asc" o "desc".');
+        }
+
+        const whereClause = {
+            OR: [
+                { auto: { marca: { contains: q } } },
+                { cliente: { nombre: { contains: q } } },
+            ]
+        };
+
+        const imports = (await db.importacionCliente.findMany({
+            where: whereClause,
+            skip: (page - 1) * limit,
+            take: limit,
+            include: {
+                cliente: true,
+                auto: true
+            },
+            orderBy: {
+                [sort]: dir
+            }
+        }))
+        const total = await db.importacionCliente.count({ where: whereClause })
+        return { imports, total, pageCount: Math.ceil(total / limit) }
+    } catch (error) {
+        if (error instanceof InvalidParameterError || error instanceof DatabaseConnectionError) {
+            throw error
+        } else {
+            console.log("Unkown Error", error)
+            throw new Error("Ocurrio un error desconocido. Por favor, intentalo de nuevo más tarde.")
+        }
+    }
+}
+
+export async function CancelImportCar(importCar: ImportacionCliente) {
+    try {
+        await db.importacionCliente.update({
+            where: {
+                id_importacion_cliente: importCar.id_importacion_cliente
+            },
+            data: {
+                estado_solicitud: "RECHAZADA"
+            }
+        })
+        return { success: true }
+    } catch (error) {
+        if (error instanceof EntityNotFound || error instanceof DatabaseConnectionError) {
+            throw error
+        }
+        else {
+            throw new Error("Ocurrio un error desconocido al cancelar el servicio. Por favor, intentalo de nuevo más tarde.")
+        }
+    }
+}
+export async function ReactivateImportCar(importCar: ImportacionCliente) {
+    try {
+        await db.importacionCliente.update({
+            where: {
+                id_importacion_cliente: importCar.id_importacion_cliente
+            },
+            data: {
+                estado_solicitud: "APROBADA"
+            }
+        })
+        return { success: true }
+    } catch (error) {
+        if (error instanceof EntityNotFound || error instanceof DatabaseConnectionError) {
+            throw error
+        }
+        else {
+            throw new Error("Ocurrio un error desconocido al cancelar el servicio. Por favor, intentalo de nuevo más tarde.")
+        }
+    }
+}
+export async function getImportCar({ where }: { where: Prisma.ImportacionClienteWhereUniqueInput }) {
+    try {
+        const profile = await db.importacionCliente.findUnique({
+            where,
+        })
+        if (!profile) {
+            throw new EntityNotFound("El perfil solicitado está inactivo o no existe")
+        }
+        return profile
+    } catch (error) {
+        if (error instanceof EntityNotFound || error instanceof DatabaseConnectionError) {
+            throw error
+        }
+        else {
+            throw new Error("Ocurrio un error desconocido. Por favor, intentalo de nuevo más tarde.")
+        }
+    }
+}
+export async function DeleteImportCar({ where }: { where: Prisma.ImportacionClienteWhereUniqueInput }) {
+    try {
+        const importCar = await getImportCar({ where })
+        console.log(importCar)
+        if (!importCar) {
+            throw new EntityNotFound("La importación solicitada no existe")
+        }
+
+        await db.importacionCliente.delete({
+            where: { id_importacion_cliente: importCar.id_importacion_cliente }
+        })
+        return { success: true }
+    } catch (error) {
+        if (error instanceof EntityNotFound || error instanceof DatabaseConnectionError) {
+            throw error
+        }
+        else {
+            throw new Error("Ocurrio un error desconocido al cancelar el servicio. Por favor, intentalo de nuevo más tarde.")
+        }
+    }
+}
