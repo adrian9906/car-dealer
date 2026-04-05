@@ -11,9 +11,10 @@ import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 
 const heroImages = [
-  "autos/carrusel1.png",
-  "autos/carrusel2.png",
-  "autos/carrusel3.png",
+  "autos/carrusel1.jpg",
+  "autos/carrusel2.jpg",
+  "autos/carrusel3.jpg",
+  "autos/carrusel4.jpg",
 ];
 
 export default function ImageCarrusel() {

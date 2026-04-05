@@ -6,7 +6,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+ 
 }
 // Entidades Principales
 model Empresa {
@@ -193,18 +193,20 @@ model Venta {
 model Alquiler {
   id_alquiler         String          @id @default(uuid())
   id_auto             String
-  id_cliente          String
+  id_cliente          String?
   auto                Auto         @relation(fields: [id_auto], references: [id_auto])
-  cliente             Cliente      @relation(fields: [id_cliente], references: [id_cliente])
+  cliente             Cliente?      @relation(fields: [id_cliente], references: [id_cliente])
   fecha_inicio        DateTime
   fecha_fin           DateTime
   precio_diario       Float
+  precio_semanal      Float         @default(0)
   deposito_garantia   Float
   estado_alquiler     EstadoAlquiler
   kilometraje_inicio  Int
   kilometraje_fin     Int?
   observaciones       String?
   facturas            Factura[]
+  isRented            Boolean        @default(false)
   transacciones       Transaccion[]
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @updatedAt
@@ -472,6 +474,12 @@ enum Category{
   SUV
   PICKUP
   COMPACT
+  LUXURY
+  EXECUTIVE
+  OFFROAD
+  SPORTS
+  PERFORMANCE
+  HEAVY_DUTY
 }
 
 enum MetodoPago {

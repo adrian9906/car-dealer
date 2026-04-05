@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
-    "@prisma/client": "^6.17.1",
+    "@prisma/adapter-better-sqlite3": "^7.2.0",
+    "@prisma/client": "^7.2.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
     "@radix-ui/react-aspect-ratio": "1.1.1",
@@ -45,6 +46,7 @@
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
     "date-fns": "4.1.0",
+    "dotenv": "^17.2.3",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "geist": "^1.3.1",
@@ -53,6 +55,7 @@
     "next": "14.2.16",
     "next-themes": "latest",
     "nextjs-toploader": "^3.9.17",
+    "prisma": "^7.2.0",
     "react": "^18",
     "react-day-picker": "9.8.0",
     "react-dom": "^18",
@@ -67,6 +70,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.9",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",

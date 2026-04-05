@@ -49,6 +49,12 @@ export default function NavBar() {
           INVENTARIO
         </Link>
         <Link
+          href={"/dealer/rent"}
+          className="text-white hover:text-primary transition-colors font-sans font-medium text-sm uppercase tracking-wide"
+        >
+          ALQUILER
+        </Link>
+        <Link
           href={hreffImport}
           className="text-white hover:text-primary transition-colors font-sans font-medium text-sm uppercase tracking-wide"
         >

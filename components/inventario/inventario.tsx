@@ -56,7 +56,7 @@ export default function Inventory({
   const searchParams = useSearchParams();
   const selectedCategory = searchParams.get("category") || "Todos los modelos";
   const selectedLocation = searchParams.get("stock") || "all";
-  const [priceRange, setPriceRange] = useState([10000, 100000]);
+  const [priceRange, setPriceRange] = useState([10000, 200000]);
   const selectedBrands = searchParams.get("brand")?.split(",") || [];
   const [sortBy, setSortBy] = useState("price-asc");
   const favorites = useFavorites();
@@ -160,6 +160,12 @@ export default function Inventory({
                     <SelectItem value="SUV">SUVs</SelectItem>
                     <SelectItem value="PICKUP">Camionetas</SelectItem>
                     <SelectItem value="COMPACT">Compactos</SelectItem>
+                    <SelectItem value="LUXURY">Lujo</SelectItem>
+                    <SelectItem value="EXECUTIVE">Ejecutivo</SelectItem>
+                    <SelectItem value="OFFROAD">Off Road</SelectItem>
+                    <SelectItem value="SPORTS">Deportivo</SelectItem>
+                    <SelectItem value="PERFORMANCE">Performance</SelectItem>
+                    <SelectItem value="HEAVY_DUTY">De Carga</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -199,7 +205,7 @@ export default function Inventory({
                     handleFilter("price_min", priceRange[0].toString());
                     handleFilter("price_max", priceRange[1].toString());
                   }}
-                  max={100000}
+                  max={200000}
                   min={10000}
                   step={1000}
                   className="mt-2"

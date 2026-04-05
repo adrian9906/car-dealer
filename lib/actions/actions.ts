@@ -23,7 +23,8 @@ export async function getBrands() {
                 marca: 'asc',
             },
         })
-        return brands.map((brand) => brand.marca)
+        const brandsUnique = new Set(brands.map((brand) => brand.marca))
+        return Array.from(brandsUnique)
     } catch (error) {
         console.error(error)
         return []
