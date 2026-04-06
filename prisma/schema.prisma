@@ -1,14 +1,16 @@
-// schema.prisma
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
- 
 }
-// Entidades Principales
 model Empresa {
   id_empresa        String       @id @default(uuid())
   nombre            String

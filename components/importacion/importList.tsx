@@ -1,4 +1,3 @@
-import { ImportacionCliente } from "@prisma/client";
 import { ArrowUpRightIcon, File, User } from "lucide-react";
 import { ImportCarTable } from "./table/imporCar-table";
 import { columns } from "./table/columns";
@@ -12,7 +11,21 @@ import {
 } from "../ui/empty";
 import { Button } from "../ui/button";
 import Link from "next/link";
-
+export interface ImportacionCliente {
+  id_importacion_cliente: string;
+  id_cliente: string;
+  id_proveedor: string | null;
+  id_auto: string | null;
+  fecha_solicitud: Date;
+  fecha_estimada_llegada: Date | null;
+  costo_importacion: number;
+  estado_solicitud: string;
+  servicios_adicionales: string | null;
+  comision_empresa: number | null;
+  condition: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 interface ImportListProps {
   imports: ImportacionCliente[];
   total: number;

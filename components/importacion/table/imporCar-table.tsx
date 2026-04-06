@@ -30,7 +30,7 @@ import {
 } from "./profiles-table.hooks";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import type { ImportacionCliente } from "@prisma/client";
+import { ImportacionCliente } from "../importList";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -51,7 +51,7 @@ export function ImportCarTable<TData, TValue>({
   const { globalFilter, setGlobalFilter, debouncedGlobalFilter } =
     useProfileGlobalFilter();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, _] = React.useState<VisibilityState>({
     id: false,
@@ -121,7 +121,7 @@ export function ImportCarTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -152,7 +152,7 @@ export function ImportCarTable<TData, TValue>({
                     <TableCell key={cell.id} className="py-3">
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

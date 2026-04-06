@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Calendar } from "../ui/calendar";
@@ -9,7 +10,7 @@ import { Alquiler } from "@/app/dealer/inventario/page";
 export function RentCard({ car }: { car: Alquiler }) {
   const [dropdown, setDropdown] =
     useState<React.ComponentProps<typeof Calendar>["captionLayout"]>(
-      "dropdown"
+      "dropdown",
     );
   const [isRented, setIsRented] = useState(false);
   const [precioTotal, setPrecio] = useState(0);
@@ -38,7 +39,16 @@ export function RentCard({ car }: { car: Alquiler }) {
     const data = await response.json();
     console.log(data);
   };
-
+  if (!car) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-10">
+        <h2 className="text-2xl font-bold text-gray-800">
+          No hay autos disponibles
+        </h2>
+        <p className="text-gray-600">Por favor, vuelve más tarde.</p>
+      </div>
+    );
+  }
   return (
     <>
       <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border-0 rounded-lg p-0">
@@ -57,10 +67,10 @@ export function RentCard({ car }: { car: Alquiler }) {
           <div className="flex flex-col p-3 gap-2">
             <div>
               <p className="text-primary text-sm font-medium leading-normal">
-                {car.auto.tipo_combustible}
+                {car.auto?.tipo_combustible}
               </p>
               <p className="text-text-light dark:text-text-dark text-2xl font-bold leading-tight tracking-[-0.015em]">
-                {car.auto.marca} {car.auto.modelo} {car.auto.año}
+                {car.auto?.marca} {car.auto?.modelo} {car.auto?.año}
               </p>
             </div>
           </div>
@@ -82,8 +92,8 @@ export function RentCard({ car }: { car: Alquiler }) {
         <CardFooter>
           <div className="flex flex-row justify-between w-full">
             <div className="flex-col">
-              <p>{car.precio_diario}$/week</p>
-              <p>{(car.precio_semanal*30).toFixed(2)}$/month</p>
+              <p>{car?.precio_diario}$/week</p>
+              <p>{((car.precio_semanal ?? 0) * 30).toFixed(2)}$/month</p>
             </div>
             <Button>Reservar hoy</Button>
           </div>

@@ -1,7 +1,3 @@
-import type React from "react";
-import { ImportCarForm } from "@/components/importacion/importForm";
-import { db } from "@/lib/db";
-import { Vehicle } from "../inventario/page";
 import { getImportData } from "@/lib/actions/actions";
 import HeadingText from "@/components/ui/headingText";
 import { AddImportButton } from "@/components/importacion/addImportButton";

@@ -1,29 +1,19 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
-import Database from 'better-sqlite3';
+import { PrismaClient } from "../app/generated/prisma/client";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { createClient } from "@libsql/client";
 
-// 1. Define la URL de la base de datos
-const databaseUrl = process.env.DATABASE_URL || 'file:./dev.db';
+const globalForPrisma = global as unknown as {
+  prisma: PrismaClient;
+};
 
-// 2. Extrae la ruta del archivo (elimina 'file:')
-const dbPath = databaseUrl.replace('file:', '');
+export const db =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    adapter: new PrismaLibSql({
+      url: "file:./prisma/dev.db",
+    }),
+  });
 
-// 4. Crea el adaptador - PASA el objeto con propiedad 'url'
-const adapter = new PrismaBetterSqlite3({ url: dbPath }); // 🔥 ¡CAMBIO IMPORTANTE!
-
-declare global {
-  var cachedPrisma: PrismaClient;
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = db;
 }
-
-let prisma: PrismaClient;
-
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient({ adapter });
-} else {
-  if (!global.cachedPrisma) {
-    global.cachedPrisma = new PrismaClient({ adapter });
-  }
-  prisma = global.cachedPrisma;
-}
-
-export const db = prisma;

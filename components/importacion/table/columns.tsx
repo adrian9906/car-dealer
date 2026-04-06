@@ -1,11 +1,17 @@
 "use client";
 
-import { EstadoSolicitudImportacion, ImportacionCliente } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/ui/tables/data-table-header";
 import { Badge } from "@/components/ui/badge";
 import { ImportCarOptions } from "../import-options";
-
+import { ImportacionCliente } from "../importList";
+export enum EstadoSolicitudImportacion {
+  PENDIENTE = "PENDIENTE",
+  APROBADA = "APROBADA",
+  EN_TRANSITO = "EN_TRANSITO",
+  COMPLETADA = "COMPLETADA",
+  RECHAZADA = "RECHAZADA",
+}
 export const columns: ColumnDef<ImportacionCliente>[] = [
   {
     accessorKey: "cliente.nombre",

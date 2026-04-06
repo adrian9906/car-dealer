@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import { type DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
@@ -25,7 +24,15 @@ import { Alquiler, Vehicle } from "@/app/dealer/inventario/page";
 import { usePrevNextButtons } from "@/hooks/use-nextCarrusel";
 import useEmblaCarousel from "embla-carousel-react";
 import { RentCard } from "./rentCard";
-
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "../ui/empty";
+import { Car } from "lucide-react";
 
 export async function RentCar({ autos }: { autos: Alquiler[] }) {
   return (
@@ -66,28 +73,52 @@ export async function RentCar({ autos }: { autos: Alquiler[] }) {
               Nuestros autos
             </h2>
           </div>
-          <Carousel id="rent" className="w-full" opts={{ slidesToScroll: 2 }}>
-            <CarouselContent className="-ml-1">
-              {autos.map((car, index) => (
-                <CarouselItem
-                  key={index}
-                  className="pl-1 md:basis-1/2 lg:basis-1/2"
-                >
-                  <div className="p-1">
-                    <RentCard car={car} />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious
-              size={"lg"}
-              className="text-primary border-9 border-primary w-10 hover:text-primary/50"
-            />
-            <CarouselNext
-              size={"lg"}
-              className="text-primary border-9 border-primary w-10 hover:text-primary/50"
-            />
-          </Carousel>
+          {autos && autos.length > 0 ? (
+            <Carousel id="rent" className="w-full" opts={{ slidesToScroll: 2 }}>
+              <CarouselContent className="-ml-1">
+                {autos?.map((car, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="pl-1 md:basis-1/2 lg:basis-1/2"
+                  >
+                    <div className="p-1">
+                      <RentCard car={car} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious
+                size={"lg"}
+                className="text-primary border-9 border-primary w-10 hover:text-primary/50"
+              />
+              <CarouselNext
+                size={"lg"}
+                className="text-primary border-9 border-primary w-10 hover:text-primary/50"
+              />
+            </Carousel>
+          ) : (
+            <>
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia
+                    variant="icon"
+                    className="h-24 w-24 bg-transparent"
+                  >
+                    <Car size={30} className="size-24" />
+                  </EmptyMedia>
+                  <EmptyTitle>No hay autos disponibles</EmptyTitle>
+                  <EmptyDescription>
+                    Por favor, vuelve más tarde.
+                  </EmptyDescription>
+                </EmptyHeader>
+                <EmptyContent>
+                  <Button>
+                    <a href="/">Inicio</a>
+                  </Button>
+                </EmptyContent>
+              </Empty>
+            </>
+          )}
         </div>
       </div>
     </div>

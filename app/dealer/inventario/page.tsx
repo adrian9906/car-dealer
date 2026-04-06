@@ -38,7 +38,7 @@ export interface Alquiler {
   auto: Vehicle; // Puedes reemplazar 'any' por la interfaz de Auto si la tienes
   cliente?: Cliente; // Puedes reemplazar 'any' por la interfaz de Cliente si la tienes
   fecha_inicio: Date; // O Date si manejas objetos Date en frontend
-  fecha_fin: Date;    // O Date
+  fecha_fin: Date; // O Date
   precio_diario: number;
   precio_semanal: number;
   deposito_garantia: number;
@@ -48,7 +48,7 @@ export interface Alquiler {
   observaciones?: string | null;
   facturas: Factura[]; // Puedes reemplazar 'any' por la interfaz de Factura si la tienes
   isRented: boolean;
-  transacciones: Transaccion[]; 
+  transacciones: Transaccion[];
 }
 
 export default async function InventoryPage({ searchParams }: PageParams) {
