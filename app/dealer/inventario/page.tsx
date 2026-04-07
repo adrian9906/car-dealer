@@ -5,7 +5,7 @@ import {
   getVehicles,
   getVehiclesTotal,
 } from "@/lib/actions/actions";
-import { Cliente, Factura, Transaccion } from "@prisma/client";
+import { Cliente, Factura, Transaccion } from "../../generated/prisma/client";
 
 export interface PageParams {
   params: { slug: string };

@@ -34,6 +34,7 @@ export default async function ImportPage({ searchParams }: PageProps) {
   }).catch((error) => {
     throw error;
   });
+
   return (
     <div className="min-h-screen bg-background">
       <div className="mt-5 px-9">

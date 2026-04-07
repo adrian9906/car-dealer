@@ -1,10 +1,6 @@
 "use server";
 
-import {
-  ImportacionCliente,
-  Prisma,
-  PrismaClient,
-} from "../../app/generated/prisma/client";
+import { Prisma, PrismaClient } from "../../app/generated/prisma/client";
 
 import { Alquiler, PageParams } from "@/app/dealer/inventario/page";
 import { EstadoSolicitudImportacion } from "../import";
@@ -15,6 +11,7 @@ import {
 } from "../exceptions/db";
 import { PriceExport } from "@/components/importacion/importForm";
 import { db } from "../db";
+import { ImportacionCliente } from "@/components/importacion/importList";
 
 type getImportParams = {
   q?: string;

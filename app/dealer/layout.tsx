@@ -24,11 +24,12 @@ export default function DealerLayout({ children }: CarDealerLayoutProps) {
   const [scrollDirection, setScrollDirection] = useState("down");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
+      setIsScrolled(window.scrollY > 20);
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setScrollDirection("down");
         setShowScrollButton(true);
@@ -56,7 +57,9 @@ export default function DealerLayout({ children }: CarDealerLayoutProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <header>
-        <nav className="sticky top-0 z-50 bg-slate-950 text-white shadow-lg">
+        <nav
+          className={`fixed w-full z-50 h-[80px] transition-all duration-300 ${isScrolled ? "bg-primary/90 backdrop-blur-md shadow-md py-4" : "bg-transparent py-6"}`}
+        >
           <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Logo */}

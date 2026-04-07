@@ -1,5 +1,5 @@
 "use client";
-import { ImportacionCliente } from "@prisma/client";
+
 import * as React from "react";
 import {
   DropdownMenu,
@@ -18,7 +18,6 @@ import {
   UserRoundCheck,
   UserRoundX,
 } from "lucide-react";
-import Link from "next/link";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,6 +36,9 @@ import {
   ReactivateImportCar,
 } from "@/lib/actions/actions";
 
+import { useRouter } from "next/navigation";
+import { ImportacionCliente } from "./importList";
+
 type Props = {
   importCar: ImportacionCliente;
 };
@@ -45,7 +47,7 @@ export function ImportCarOptions({ importCar }: Props) {
   const [showSubscriptionAlert, setSubscriptionAlert] =
     React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
+  const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false);
 
   async function handleCancelSubscription(importCar: ImportacionCliente) {
@@ -58,6 +60,7 @@ export function ImportCarOptions({ importCar }: Props) {
           variant: "default",
         });
       }
+      router.push("/dealer/importacion");
       return true;
     } catch (error) {
       if (error instanceof Error) {
@@ -81,6 +84,7 @@ export function ImportCarOptions({ importCar }: Props) {
           variant: "default",
         });
       }
+      router.push("/dealer/importacion");
       return true;
     } catch (error) {
       if (error instanceof Error) {
@@ -184,7 +188,7 @@ export function ImportCarOptions({ importCar }: Props) {
                       day: "numeric",
                       month: "numeric",
                       year: "numeric",
-                    }
+                    },
                   )}`
                 : `Al hacer esto se dejará de enviar actualizaciones del
                clipping de prensa hasta que se reactive el perfil.`}

@@ -74,12 +74,12 @@ export async function RentCar({ autos }: { autos: Alquiler[] }) {
             </h2>
           </div>
           {autos && autos.length > 0 ? (
-            <Carousel id="rent" className="w-full" opts={{ slidesToScroll: 2 }}>
+            <Carousel id="rent" className="w-full" opts={{ slidesToScroll: 1 }}>
               <CarouselContent className="-ml-1">
                 {autos?.map((car, index) => (
                   <CarouselItem
                     key={index}
-                    className="pl-1 md:basis-1/2 lg:basis-1/2"
+                    className="pl-1 basis-full md:basis-1/2"
                   >
                     <div className="p-1">
                       <RentCard car={car} />
@@ -87,14 +87,18 @@ export async function RentCar({ autos }: { autos: Alquiler[] }) {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious
-                size={"lg"}
-                className="text-primary border-9 border-primary w-10 hover:text-primary/50"
-              />
-              <CarouselNext
-                size={"lg"}
-                className="text-primary border-9 border-primary w-10 hover:text-primary/50"
-              />
+              {autos && autos.length > 1 && (
+                <>
+                  <CarouselPrevious
+                    size={"lg"}
+                    className="border border-primary w-10 hover:text-primary/50"
+                  />
+                  <CarouselNext
+                    size={"lg"}
+                    className="border border-primary w-10 hover:text-primary/50"
+                  />
+                </>
+              )}
             </Carousel>
           ) : (
             <>

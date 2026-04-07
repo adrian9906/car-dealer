@@ -29,7 +29,7 @@ export default function NavBar() {
   searchParams2.append("q", "");
   const hreffImport = createUrl(
     "/dealer/importacion",
-    searchParams2
+    searchParams2,
   ).toString();
 
   return (
@@ -61,13 +61,13 @@ export default function NavBar() {
           IMPORTACIÓN
         </Link>
         <Link
-          href="#equipo"
+          href={"/dealer/equipo"}
           className="text-white hover:text-primary transition-colors font-sans font-medium text-sm uppercase tracking-wide"
         >
           QUIÉNES SOMOS
         </Link>
         <Link
-          href="#contacto"
+          href="/dealer/contacto"
           className="text-white hover:text-primary transition-colors font-sans font-medium text-sm uppercase tracking-wide"
         >
           CONTÁCTENOS
