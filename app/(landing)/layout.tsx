@@ -1,6 +1,7 @@
 "use client";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -86,15 +87,7 @@ export default function CarDealerLayout({ children }: CarDealerLayoutProps) {
                     <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="text-white hover:bg-slate-800 h-9 w-9 "
-                >
-                  <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                </Button>
+                <AnimatedThemeToggler />
                 <Button
                   variant="ghost"
                   size="icon"
