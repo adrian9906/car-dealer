@@ -72,6 +72,12 @@ export default function NavBar() {
         >
           CONTÁCTENOS
         </Link>
+        <Link
+          href="/dealer/garantia"
+          className="text-white hover:text-primary transition-colors font-sans font-medium text-sm uppercase tracking-wide"
+        >
+          GARANTÍA
+        </Link>
       </div>
     </>
   );

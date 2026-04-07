@@ -11,7 +11,7 @@ import {
   Phone,
   Mail,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef, forwardRef } from "react";
 import {
   Card,
   CardHeader,
@@ -22,8 +22,73 @@ import {
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
+import { Marquee } from "./ui/marquee";
+import { AnimatedBeam } from "./ui/animated-beam";
+import { cn } from "@/lib/utils";
+import { BentoCard, BentoGrid } from "./ui/bento-grid";
 
+const Circle = forwardRef<
+  HTMLDivElement,
+  { className?: string; children?: React.ReactNode }
+>(({ className, children }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "z-10 flex size-12 items-center justify-center rounded-full border-2 bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)]",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+});
+Circle.displayName = "Circle";
 export default function MainContent() {
+  const features = [
+    {
+      Icon: Users,
+      name: "Equipo Experimentado",
+      description:
+        "Más de 50 años de experiencia combinada en el sector automotriz.",
+      href: "/dealer/equipo",
+      cta: "Conocer el equipo",
+      className: "col-span-3 lg:col-span-1",
+      background: (
+        <div className="absolute inset-0 flex items-center justify-center opacity-10">
+          <Users className="h-32 w-32 text-primary" />
+        </div>
+      ),
+    },
+    {
+      Icon: Shield,
+      name: "Garantía Total",
+      description:
+        "Respaldamos cada vehículo que vendemos con garantía extendida hasta 3 años.",
+      href: "/dealer/garantia",
+      cta: "Ver garantías",
+      className: "col-span-3 lg:col-span-1",
+      background: (
+        <div className="absolute inset-0 flex items-center justify-center opacity-10">
+          <Shield className="h-32 w-32 text-primary" />
+        </div>
+      ),
+    },
+    {
+      Icon: Star,
+      name: "Servicio Premium",
+      description:
+        "Atención personalizada de principio a fin, desde la consulta hasta la entrega.",
+      href: "/dealer/contacto",
+      cta: "Contactar asesor",
+      className: "col-span-3 lg:col-span-1",
+      background: (
+        <div className="absolute inset-0 flex items-center justify-center opacity-10">
+          <Star className="h-32 w-32 text-primary" />
+        </div>
+      ),
+    },
+  ];
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -34,7 +99,7 @@ export default function MainContent() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
 
     const elements = document.querySelectorAll(".scroll-reveal");
@@ -42,6 +107,11 @@ export default function MainContent() {
 
     return () => observer.disconnect();
   }, []);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const equipoRef = useRef<HTMLDivElement>(null);
+  const garantiaRef = useRef<HTMLDivElement>(null);
+  const servicioRef = useRef<HTMLDivElement>(null);
+  const autoRef = useRef<HTMLDivElement>(null);
   return (
     <>
       <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:bg-gradient-to-br dark:from-slate-50 dark:to-slate-100 dark:bg-slate-100 py-16 lg:py-24">
@@ -276,7 +346,7 @@ export default function MainContent() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20" id="testimonios">
+      <section className="py-20 scroll-reveal " id="testimonios">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 scroll-reveal">
             <h3 className="text-4xl font-bold text-foreground mb-4 font-mono">
@@ -286,104 +356,107 @@ export default function MainContent() {
               Historias reales de clientes satisfechos
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto scroll-reveal">
-            <Card className="text-center border-primary/20 hover:border-primary group hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto mb-4">
-                  <img
-                    src="/cuban-professional-smile.png"
-                    alt="Carlos Rodríguez"
-                    className="w-20 h-20 rounded-full mx-auto object-cover"
-                  />
-                </div>
-                <CardTitle className="font-mono">Carlos Rodríguez</CardTitle>
-                <CardDescription className="font-sans">
-                  Compró Honda CR-V 2023
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-4 w-4 fill-primary text-primary"
+          <Marquee pauseOnHover className="[--duration:20s]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto ">
+              <Card className="text-center border-primary/20 hover:border-primary group hover:shadow-lg transition-all duration-300">
+                <CardHeader>
+                  <div className="mx-auto mb-4">
+                    <img
+                      src="/cuban-professional-smile.png"
+                      alt="Carlos Rodríguez"
+                      className="w-20 h-20 rounded-full mx-auto object-cover"
                     />
-                  ))}
-                </div>
-                <p className="text-muted-foreground font-sans italic text-sm">
-                  "Excelente servicio desde el primer día. Mi Honda CR-V llegó
-                  en perfectas condiciones y el proceso de importación fue muy
-                  transparente."
-                </p>
-              </CardContent>
-            </Card>
+                  </div>
+                  <CardTitle className="font-mono">Carlos Rodríguez</CardTitle>
+                  <CardDescription className="font-sans">
+                    Compró Honda CR-V 2023
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-center mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-primary text-primary"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground font-sans italic text-sm">
+                    "Excelente servicio desde el primer día. Mi Honda CR-V llegó
+                    en perfectas condiciones y el proceso de importación fue muy
+                    transparente."
+                  </p>
+                </CardContent>
+              </Card>
 
-            <Card className="text-center border-primary/20 hover:border-primary group hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto mb-4">
-                  <img
-                    src="/placeholder-l6hfc.png"
-                    alt="María González"
-                    className="w-20 h-20 rounded-full mx-auto object-cover"
-                  />
-                </div>
-                <CardTitle className="font-mono">María González</CardTitle>
-                <CardDescription className="font-sans">
-                  Compró Toyota Corolla 2023
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-4 w-4 fill-primary text-primary"
+              <Card className="text-center border-primary/20 hover:border-primary group hover:shadow-lg transition-all duration-300">
+                <CardHeader>
+                  <div className="mx-auto mb-4">
+                    <img
+                      src="/placeholder-l6hfc.png"
+                      alt="María González"
+                      className="w-20 h-20 rounded-full mx-auto object-cover"
                     />
-                  ))}
-                </div>
-                <p className="text-muted-foreground font-sans italic text-sm">
-                  "El equipo de AutoCuba me ayudó a encontrar el auto perfecto
-                  para mi familia. El financiamiento fue muy accesible."
-                </p>
-              </CardContent>
-            </Card>
+                  </div>
+                  <CardTitle className="font-mono">María González</CardTitle>
+                  <CardDescription className="font-sans">
+                    Compró Toyota Corolla 2023
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-center mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-primary text-primary"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground font-sans italic text-sm">
+                    "El equipo de AutoCuba me ayudó a encontrar el auto perfecto
+                    para mi familia. El financiamiento fue muy accesible."
+                  </p>
+                </CardContent>
+              </Card>
 
-            <Card className="text-center border-primary/20 hover:border-primary group hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="mx-auto mb-4">
-                  <img
-                    src="/professional-cuban-man-smiling.png"
-                    alt="José Martínez"
-                    className="w-20 h-20 rounded-full mx-auto object-cover"
-                  />
-                </div>
-                <CardTitle className="font-mono">José Martínez</CardTitle>
-                <CardDescription className="font-sans">
-                  Compró Ford F-150 2023
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-4 w-4 fill-primary text-primary"
+              <Card className="text-center border-primary/20 hover:border-primary group hover:shadow-lg transition-all duration-300">
+                <CardHeader>
+                  <div className="mx-auto mb-4">
+                    <img
+                      src="/professional-cuban-man-smiling.png"
+                      alt="José Martínez"
+                      className="w-20 h-20 rounded-full mx-auto object-cover"
                     />
-                  ))}
-                </div>
-                <p className="text-muted-foreground font-sans italic text-sm">
-                  "Necesitaba una camioneta para mi negocio y AutoCuba me
-                  consiguió exactamente lo que buscaba. Muy profesionales."
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+                  </div>
+                  <CardTitle className="font-mono">José Martínez</CardTitle>
+                  <CardDescription className="font-sans">
+                    Compró Ford F-150 2023
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-center mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-primary text-primary"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground font-sans italic text-sm">
+                    "Necesitaba una camioneta para mi negocio y AutoCuba me
+                    consiguió exactamente lo que buscaba. Muy profesionales."
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </Marquee>
+          <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"></div>
+          <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l"></div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-muted/50" id="equipo">
+      <section className="py-20 bg-muted/50 scroll-reveal" id="equipo">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 scroll-reveal">
             <h3 className="text-4xl font-bold text-foreground mb-4 font-mono">
@@ -393,165 +466,177 @@ export default function MainContent() {
               Expertos dedicados a encontrar tu vehículo ideal
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto scroll-reveal">
-            <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
-              <CardHeader>
-                <div className="mx-auto mb-4">
-                  <img
-                    src="/placeholder-zbtpu.png"
-                    alt="Roberto Fernández"
-                    className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
-                  />
-                </div>
-                <CardTitle className="font-mono">Roberto Fernández</CardTitle>
-                <CardDescription className="font-sans">
-                  Gerente General
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center mb-3">
-                  <div className="p-2 bg-primary/10 rounded-full">
-                    <Users className="h-5 w-5 text-primary" />
+          <Marquee pauseOnHover className="[--duration:20s]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto ">
+              <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
+                <CardHeader>
+                  <div className="mx-auto mb-4">
+                    <img
+                      src="/placeholder-zbtpu.png"
+                      alt="Roberto Fernández"
+                      className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
+                    />
                   </div>
-                </div>
-                <p className="text-sm text-muted-foreground font-sans mb-3">
-                  15+ años de experiencia en el sector automotriz cubano
-                </p>
-                <Badge variant="secondary" className="text-xs font-sans">
-                  Liderazgo
-                </Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
-              <CardHeader>
-                <div className="mx-auto mb-4">
-                  <img
-                    src="/cuban-sales-woman-professional.png"
-                    alt="Ana María López"
-                    className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
-                  />
-                </div>
-                <CardTitle className="font-mono">Ana María López</CardTitle>
-                <CardDescription className="font-sans">
-                  Asesora de Ventas Senior
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center mb-3">
-                  <div className="p-2 bg-primary/10 rounded-full">
-                    <Star className="h-5 w-5 text-primary" />
+                  <CardTitle className="font-mono">Roberto Fernández</CardTitle>
+                  <CardDescription className="font-sans">
+                    Gerente General
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-center mb-3">
+                    <div className="p-2 bg-primary/10 rounded-full">
+                      <Users className="h-5 w-5 text-primary" />
+                    </div>
                   </div>
-                </div>
-                <p className="text-sm text-muted-foreground font-sans mb-3">
-                  Especialista en financiamiento y seguros vehiculares
-                </p>
-                <Badge variant="secondary" className="text-xs font-sans">
-                  Ventas
-                </Badge>
-              </CardContent>
-            </Card>
+                  <p className="text-sm text-muted-foreground font-sans mb-3">
+                    15+ años de experiencia en el sector automotriz cubano
+                  </p>
+                  <Badge variant="secondary" className="text-xs font-sans">
+                    Liderazgo
+                  </Badge>
+                </CardContent>
+              </Card>
 
-            <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
-              <CardHeader>
-                <div className="mx-auto mb-4">
-                  <img
-                    src="/cuban-mechanic-expert.png"
-                    alt="Miguel Rodríguez"
-                    className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
-                  />
-                </div>
-                <CardTitle className="font-mono">Miguel Rodríguez</CardTitle>
-                <CardDescription className="font-sans">
-                  Jefe de Taller
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center mb-3">
-                  <div className="p-2 bg-primary/10 rounded-full">
-                    <Shield className="h-5 w-5 text-primary" />
+              <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
+                <CardHeader>
+                  <div className="mx-auto mb-4">
+                    <img
+                      src="/cuban-sales-woman-professional.png"
+                      alt="Ana María López"
+                      className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
+                    />
                   </div>
-                </div>
-                <p className="text-sm text-muted-foreground font-sans mb-3">
-                  Certificado en inspección y mantenimiento vehiculares
-                </p>
-                <Badge variant="secondary" className="text-xs font-sans">
-                  Técnico
-                </Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
-              <CardHeader>
-                <div className="mx-auto mb-4">
-                  <img
-                    src="/cuban-import-specialist.png"
-                    alt="Carmen Díaz"
-                    className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
-                  />
-                </div>
-                <CardTitle className="font-mono">Carmen Díaz</CardTitle>
-                <CardDescription className="font-sans">
-                  Especialista en Importación
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center mb-3">
-                  <div className="p-2 bg-primary/10 rounded-full">
-                    <Star className="h-5 w-5 text-primary" />
+                  <CardTitle className="font-mono">Ana María López</CardTitle>
+                  <CardDescription className="font-sans">
+                    Asesora de Ventas Senior
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-center mb-3">
+                    <div className="p-2 bg-primary/10 rounded-full">
+                      <Star className="h-5 w-5 text-primary" />
+                    </div>
                   </div>
-                </div>
-                <p className="text-sm text-muted-foreground font-sans mb-3">
-                  Experta en trámites aduanales y logística internacional
-                </p>
-                <Badge variant="secondary" className="text-xs font-sans">
-                  Importación
-                </Badge>
-              </CardContent>
-            </Card>
-          </div>
+                  <p className="text-sm text-muted-foreground font-sans mb-3">
+                    Especialista en financiamiento y seguros vehiculares
+                  </p>
+                  <Badge variant="secondary" className="text-xs font-sans">
+                    Ventas
+                  </Badge>
+                </CardContent>
+              </Card>
 
+              <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
+                <CardHeader>
+                  <div className="mx-auto mb-4">
+                    <img
+                      src="/cuban-mechanic-expert.png"
+                      alt="Miguel Rodríguez"
+                      className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
+                    />
+                  </div>
+                  <CardTitle className="font-mono">Miguel Rodríguez</CardTitle>
+                  <CardDescription className="font-sans">
+                    Jefe de Taller
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-center mb-3">
+                    <div className="p-2 bg-primary/10 rounded-full">
+                      <Shield className="h-5 w-5 text-primary" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground font-sans mb-3">
+                    Certificado en inspección y mantenimiento vehiculares
+                  </p>
+                  <Badge variant="secondary" className="text-xs font-sans">
+                    Técnico
+                  </Badge>
+                </CardContent>
+              </Card>
+
+              <Card className="text-center group hover:shadow-lg transition-all duration-300 border-primary/20 hover:border-primary">
+                <CardHeader>
+                  <div className="mx-auto mb-4">
+                    <img
+                      src="/cuban-import-specialist.png"
+                      alt="Carmen Díaz"
+                      className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/40 transition-colors"
+                    />
+                  </div>
+                  <CardTitle className="font-mono">Carmen Díaz</CardTitle>
+                  <CardDescription className="font-sans">
+                    Especialista en Importación
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-center mb-3">
+                    <div className="p-2 bg-primary/10 rounded-full">
+                      <Star className="h-5 w-5 text-primary" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground font-sans mb-3">
+                    Experta en trámites aduanales y logística internacional
+                  </p>
+                  <Badge variant="secondary" className="text-xs font-sans">
+                    Importación
+                  </Badge>
+                </CardContent>
+              </Card>
+            </div>
+          </Marquee>
+          <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"></div>
+          <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l"></div>
           <div className="text-center mt-16 scroll-reveal">
             <div className="max-w-3xl mx-auto">
               <h4 className="text-2xl font-bold text-foreground mb-4 font-mono">
                 ¿Por Qué Elegir AutoCuba?
               </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="mx-auto mb-3 p-3 bg-primary/10 rounded-full w-fit">
-                    <Users className="h-6 w-6 text-primary" />
-                  </div>
-                  <h5 className="font-semibold mb-2 font-sans">
-                    Equipo Experimentado
-                  </h5>
-                  <p className="text-sm text-muted-foreground font-sans">
-                    Más de 50 años de experiencia combinada
-                  </p>
+              <div
+                ref={containerRef}
+                className="relative flex flex-col items-center gap-16 h-[300px] w-full"
+              >
+                {/* Fila superior con los 3 beneficios */}
+                <div className="flex flex-row justify-between w-full max-w-lg">
+                  <Circle ref={equipoRef}>
+                    <Users className="h-6 w-6" />
+                  </Circle>
+                  <Circle ref={garantiaRef}>
+                    <Shield className="h-6 w-6" />
+                  </Circle>
+                  <Circle ref={servicioRef}>
+                    <Star className="h-6 w-6" />
+                  </Circle>
                 </div>
-                <div className="text-center">
-                  <div className="mx-auto mb-3 p-3 bg-primary/10 rounded-full w-fit">
-                    <Shield className="h-6 w-6 text-primary" />
-                  </div>
-                  <h5 className="font-semibold mb-2 font-sans">
-                    Garantía Total
-                  </h5>
-                  <p className="text-sm text-muted-foreground font-sans">
-                    Respaldamos cada vehículo que vendemos
-                  </p>
-                </div>
-                <div className="text-center">
-                  <div className="mx-auto mb-3 p-3 bg-primary/10 rounded-full w-fit">
-                    <Star className="h-6 w-6 text-primary" />
-                  </div>
-                  <h5 className="font-semibold mb-2 font-sans">
-                    Servicio Premium
-                  </h5>
-                  <p className="text-sm text-muted-foreground font-sans">
-                    Atención personalizada de principio a fin
-                  </p>
-                </div>
+
+                {/* Nodo central: el auto */}
+                <Circle ref={autoRef} className="size-16">
+                  <Car className="h-8 w-8 text-primary" />
+                </Circle>
+                <AnimatedBeam
+                  containerRef={containerRef}
+                  fromRef={equipoRef}
+                  toRef={autoRef}
+                  duration={3}
+                />
+                <AnimatedBeam
+                  containerRef={containerRef}
+                  fromRef={garantiaRef}
+                  toRef={autoRef}
+                  duration={3}
+                />
+                <AnimatedBeam
+                  containerRef={containerRef}
+                  fromRef={servicioRef}
+                  toRef={autoRef}
+                  duration={3}
+                />
               </div>
+              <BentoGrid>
+                {features.map((feature, idx) => (
+                  <BentoCard key={idx} {...feature} />
+                ))}
+              </BentoGrid>
             </div>
           </div>
         </div>
