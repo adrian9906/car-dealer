@@ -744,6 +744,7 @@ export type FacturaCreateOrConnectWithoutClienteInput = {
 
 export type FacturaCreateManyClienteInputEnvelope = {
   data: Prisma.FacturaCreateManyClienteInput | Prisma.FacturaCreateManyClienteInput[]
+  skipDuplicates?: boolean
 }
 
 export type FacturaUpsertWithWhereUniqueWithoutClienteInput = {
@@ -821,6 +822,7 @@ export type FacturaCreateOrConnectWithoutVentaInput = {
 
 export type FacturaCreateManyVentaInputEnvelope = {
   data: Prisma.FacturaCreateManyVentaInput | Prisma.FacturaCreateManyVentaInput[]
+  skipDuplicates?: boolean
 }
 
 export type FacturaUpsertWithWhereUniqueWithoutVentaInput = {
@@ -878,6 +880,7 @@ export type FacturaCreateOrConnectWithoutAlquilerInput = {
 
 export type FacturaCreateManyAlquilerInputEnvelope = {
   data: Prisma.FacturaCreateManyAlquilerInput | Prisma.FacturaCreateManyAlquilerInput[]
+  skipDuplicates?: boolean
 }
 
 export type FacturaUpsertWithWhereUniqueWithoutAlquilerInput = {
@@ -1880,6 +1883,7 @@ export type FacturaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Facturas.
    */
   data: Prisma.FacturaCreateManyInput | Prisma.FacturaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1898,6 +1902,7 @@ export type FacturaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Facturas.
    */
   data: Prisma.FacturaCreateManyInput | Prisma.FacturaCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

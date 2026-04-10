@@ -264,7 +264,6 @@ export type EmpleadoWhereInput = {
   salario?: Prisma.FloatFilter<"Empleado"> | number
   createdAt?: Prisma.DateTimeFilter<"Empleado"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Empleado"> | Date | string
-  ventas?: Prisma.VentaListRelationFilter
 }
 
 export type EmpleadoOrderByWithRelationInput = {
@@ -279,7 +278,6 @@ export type EmpleadoOrderByWithRelationInput = {
   salario?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ventas?: Prisma.VentaOrderByRelationAggregateInput
 }
 
 export type EmpleadoWhereUniqueInput = Prisma.AtLeast<{
@@ -297,7 +295,6 @@ export type EmpleadoWhereUniqueInput = Prisma.AtLeast<{
   salario?: Prisma.FloatFilter<"Empleado"> | number
   createdAt?: Prisma.DateTimeFilter<"Empleado"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Empleado"> | Date | string
-  ventas?: Prisma.VentaListRelationFilter
 }, "id_empleado" | "ci">
 
 export type EmpleadoOrderByWithAggregationInput = {
@@ -348,7 +345,6 @@ export type EmpleadoCreateInput = {
   salario: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  ventas?: Prisma.VentaCreateNestedManyWithoutEmpleadoInput
 }
 
 export type EmpleadoUncheckedCreateInput = {
@@ -363,7 +359,6 @@ export type EmpleadoUncheckedCreateInput = {
   salario: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpleadoInput
 }
 
 export type EmpleadoUpdateInput = {
@@ -378,7 +373,6 @@ export type EmpleadoUpdateInput = {
   salario?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ventas?: Prisma.VentaUpdateManyWithoutEmpleadoNestedInput
 }
 
 export type EmpleadoUncheckedUpdateInput = {
@@ -393,7 +387,6 @@ export type EmpleadoUncheckedUpdateInput = {
   salario?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpleadoNestedInput
 }
 
 export type EmpleadoCreateManyInput = {
@@ -436,11 +429,6 @@ export type EmpleadoUncheckedUpdateManyInput = {
   salario?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type EmpleadoScalarRelationFilter = {
-  is?: Prisma.EmpleadoWhereInput
-  isNot?: Prisma.EmpleadoWhereInput
 }
 
 export type EmpleadoCountOrderByAggregateInput = {
@@ -493,125 +481,10 @@ export type EmpleadoSumOrderByAggregateInput = {
   salario?: Prisma.SortOrder
 }
 
-export type EmpleadoCreateNestedOneWithoutVentasInput = {
-  create?: Prisma.XOR<Prisma.EmpleadoCreateWithoutVentasInput, Prisma.EmpleadoUncheckedCreateWithoutVentasInput>
-  connectOrCreate?: Prisma.EmpleadoCreateOrConnectWithoutVentasInput
-  connect?: Prisma.EmpleadoWhereUniqueInput
-}
-
-export type EmpleadoUpdateOneRequiredWithoutVentasNestedInput = {
-  create?: Prisma.XOR<Prisma.EmpleadoCreateWithoutVentasInput, Prisma.EmpleadoUncheckedCreateWithoutVentasInput>
-  connectOrCreate?: Prisma.EmpleadoCreateOrConnectWithoutVentasInput
-  upsert?: Prisma.EmpleadoUpsertWithoutVentasInput
-  connect?: Prisma.EmpleadoWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EmpleadoUpdateToOneWithWhereWithoutVentasInput, Prisma.EmpleadoUpdateWithoutVentasInput>, Prisma.EmpleadoUncheckedUpdateWithoutVentasInput>
-}
-
 export type EnumCargoEmpleadoFieldUpdateOperationsInput = {
   set?: $Enums.CargoEmpleado
 }
 
-export type EmpleadoCreateWithoutVentasInput = {
-  id_empleado?: string
-  nombre: string
-  apellidos: string
-  ci: string
-  cargo: $Enums.CargoEmpleado
-  telefono: string
-  email: string
-  fecha_contratacion?: Date | string
-  salario: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type EmpleadoUncheckedCreateWithoutVentasInput = {
-  id_empleado?: string
-  nombre: string
-  apellidos: string
-  ci: string
-  cargo: $Enums.CargoEmpleado
-  telefono: string
-  email: string
-  fecha_contratacion?: Date | string
-  salario: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type EmpleadoCreateOrConnectWithoutVentasInput = {
-  where: Prisma.EmpleadoWhereUniqueInput
-  create: Prisma.XOR<Prisma.EmpleadoCreateWithoutVentasInput, Prisma.EmpleadoUncheckedCreateWithoutVentasInput>
-}
-
-export type EmpleadoUpsertWithoutVentasInput = {
-  update: Prisma.XOR<Prisma.EmpleadoUpdateWithoutVentasInput, Prisma.EmpleadoUncheckedUpdateWithoutVentasInput>
-  create: Prisma.XOR<Prisma.EmpleadoCreateWithoutVentasInput, Prisma.EmpleadoUncheckedCreateWithoutVentasInput>
-  where?: Prisma.EmpleadoWhereInput
-}
-
-export type EmpleadoUpdateToOneWithWhereWithoutVentasInput = {
-  where?: Prisma.EmpleadoWhereInput
-  data: Prisma.XOR<Prisma.EmpleadoUpdateWithoutVentasInput, Prisma.EmpleadoUncheckedUpdateWithoutVentasInput>
-}
-
-export type EmpleadoUpdateWithoutVentasInput = {
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
-  nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  apellidos?: Prisma.StringFieldUpdateOperationsInput | string
-  ci?: Prisma.StringFieldUpdateOperationsInput | string
-  cargo?: Prisma.EnumCargoEmpleadoFieldUpdateOperationsInput | $Enums.CargoEmpleado
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  fecha_contratacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salario?: Prisma.FloatFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type EmpleadoUncheckedUpdateWithoutVentasInput = {
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
-  nombre?: Prisma.StringFieldUpdateOperationsInput | string
-  apellidos?: Prisma.StringFieldUpdateOperationsInput | string
-  ci?: Prisma.StringFieldUpdateOperationsInput | string
-  cargo?: Prisma.EnumCargoEmpleadoFieldUpdateOperationsInput | $Enums.CargoEmpleado
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  fecha_contratacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salario?: Prisma.FloatFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-
-/**
- * Count Type EmpleadoCountOutputType
- */
-
-export type EmpleadoCountOutputType = {
-  ventas: number
-}
-
-export type EmpleadoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ventas?: boolean | EmpleadoCountOutputTypeCountVentasArgs
-}
-
-/**
- * EmpleadoCountOutputType without action
- */
-export type EmpleadoCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the EmpleadoCountOutputType
-   */
-  select?: Prisma.EmpleadoCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * EmpleadoCountOutputType without action
- */
-export type EmpleadoCountOutputTypeCountVentasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.VentaWhereInput
-}
 
 
 export type EmpleadoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -626,8 +499,6 @@ export type EmpleadoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   salario?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ventas?: boolean | Prisma.Empleado$ventasArgs<ExtArgs>
-  _count?: boolean | Prisma.EmpleadoCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["empleado"]>
 
 export type EmpleadoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -673,18 +544,10 @@ export type EmpleadoSelectScalar = {
 }
 
 export type EmpleadoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_empleado" | "nombre" | "apellidos" | "ci" | "cargo" | "telefono" | "email" | "fecha_contratacion" | "salario" | "createdAt" | "updatedAt", ExtArgs["result"]["empleado"]>
-export type EmpleadoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ventas?: boolean | Prisma.Empleado$ventasArgs<ExtArgs>
-  _count?: boolean | Prisma.EmpleadoCountOutputTypeDefaultArgs<ExtArgs>
-}
-export type EmpleadoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type EmpleadoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $EmpleadoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Empleado"
-  objects: {
-    ventas: Prisma.$VentaPayload<ExtArgs>[]
-  }
+  objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id_empleado: string
     nombre: string
@@ -1091,7 +954,6 @@ readonly fields: EmpleadoFieldRefs;
  */
 export interface Prisma__EmpleadoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  ventas<T extends Prisma.Empleado$ventasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Empleado$ventasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VentaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1149,10 +1011,6 @@ export type EmpleadoFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
-  /**
    * Filter, which Empleado to fetch.
    */
   where: Prisma.EmpleadoWhereUniqueInput
@@ -1171,10 +1029,6 @@ export type EmpleadoFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
-  /**
    * Filter, which Empleado to fetch.
    */
   where: Prisma.EmpleadoWhereUniqueInput
@@ -1192,10 +1046,6 @@ export type EmpleadoFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Empleado
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
   /**
    * Filter, which Empleado to fetch.
    */
@@ -1245,10 +1095,6 @@ export type EmpleadoFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
-  /**
    * Filter, which Empleado to fetch.
    */
   where?: Prisma.EmpleadoWhereInput
@@ -1296,10 +1142,6 @@ export type EmpleadoFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Empleado
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
   /**
    * Filter, which Empleados to fetch.
    */
@@ -1349,10 +1191,6 @@ export type EmpleadoCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
-  /**
    * The data needed to create a Empleado.
    */
   data: Prisma.XOR<Prisma.EmpleadoCreateInput, Prisma.EmpleadoUncheckedCreateInput>
@@ -1366,6 +1204,7 @@ export type EmpleadoCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Empleados.
    */
   data: Prisma.EmpleadoCreateManyInput | Prisma.EmpleadoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1384,6 +1223,7 @@ export type EmpleadoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Empleados.
    */
   data: Prisma.EmpleadoCreateManyInput | Prisma.EmpleadoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1398,10 +1238,6 @@ export type EmpleadoUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Empleado
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
   /**
    * The data needed to update a Empleado.
    */
@@ -1469,10 +1305,6 @@ export type EmpleadoUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
-  /**
    * The filter to search for the Empleado to update in case it exists.
    */
   where: Prisma.EmpleadoWhereUniqueInput
@@ -1499,10 +1331,6 @@ export type EmpleadoDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
   /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
-  /**
    * Filter which Empleado to delete.
    */
   where: Prisma.EmpleadoWhereUniqueInput
@@ -1523,30 +1351,6 @@ export type EmpleadoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Empleado.ventas
- */
-export type Empleado$ventasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Venta
-   */
-  select?: Prisma.VentaSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Venta
-   */
-  omit?: Prisma.VentaOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.VentaInclude<ExtArgs> | null
-  where?: Prisma.VentaWhereInput
-  orderBy?: Prisma.VentaOrderByWithRelationInput | Prisma.VentaOrderByWithRelationInput[]
-  cursor?: Prisma.VentaWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.VentaScalarFieldEnum | Prisma.VentaScalarFieldEnum[]
-}
-
-/**
  * Empleado without action
  */
 export type EmpleadoDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1558,8 +1362,4 @@ export type EmpleadoDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Empleado
    */
   omit?: Prisma.EmpleadoOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EmpleadoInclude<ExtArgs> | null
 }

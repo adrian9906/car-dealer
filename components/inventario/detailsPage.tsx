@@ -43,7 +43,13 @@ export function DetailsComponent({ vehicle }: { vehicle: Vehicle | null }) {
             <div className="lg:w-2/3">
               <div className="@container">
                 <div className="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden rounded-xl min-h-80">
-                  {vehicle?.imagen}
+                  <img
+                    src={
+                      vehicle?.imagen ? vehicle.imagen : "/placeholder-car.png"
+                    }
+                    alt={`${vehicle?.marca} ${vehicle?.modelo}`}
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
               </div>
               <div className="mt-8">

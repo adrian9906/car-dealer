@@ -1324,6 +1324,7 @@ export type ClienteImportadorCreateManyArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many ClienteImportadors.
    */
   data: Prisma.ClienteImportadorCreateManyInput | Prisma.ClienteImportadorCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1342,6 +1343,7 @@ export type ClienteImportadorCreateManyAndReturnArgs<ExtArgs extends runtime.Typ
    * The data used to create many ClienteImportadors.
    */
   data: Prisma.ClienteImportadorCreateManyInput | Prisma.ClienteImportadorCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

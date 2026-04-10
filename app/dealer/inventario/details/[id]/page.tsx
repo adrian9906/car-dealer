@@ -9,7 +9,7 @@ type PageProps = {
 export default async function DetailsPage({ params }: PageProps) {
   const vehicleDetails: Vehicle | null = await getVehicle(params.vehicle);
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background mt-20">
       <DetailsComponent vehicle={vehicleDetails} />
     </div>
   );

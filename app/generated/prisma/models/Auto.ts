@@ -1194,6 +1194,7 @@ export type AutoCreateOrConnectWithoutProveedorInput = {
 
 export type AutoCreateManyProveedorInputEnvelope = {
   data: Prisma.AutoCreateManyProveedorInput | Prisma.AutoCreateManyProveedorInput[]
+  skipDuplicates?: boolean
 }
 
 export type AutoUpsertWithWhereUniqueWithoutProveedorInput = {
@@ -1315,6 +1316,7 @@ export type AutoCreateOrConnectWithoutCliente_propietarioInput = {
 
 export type AutoCreateManyCliente_propietarioInputEnvelope = {
   data: Prisma.AutoCreateManyCliente_propietarioInput | Prisma.AutoCreateManyCliente_propietarioInput[]
+  skipDuplicates?: boolean
 }
 
 export type AutoUpsertWithWhereUniqueWithoutCliente_propietarioInput = {
@@ -1404,6 +1406,7 @@ export type AutoCreateOrConnectWithoutImportacionInput = {
 
 export type AutoCreateManyImportacionInputEnvelope = {
   data: Prisma.AutoCreateManyImportacionInput | Prisma.AutoCreateManyImportacionInput[]
+  skipDuplicates?: boolean
 }
 
 export type AutoUpsertWithWhereUniqueWithoutImportacionInput = {
@@ -3287,6 +3290,7 @@ export type AutoCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Autos.
    */
   data: Prisma.AutoCreateManyInput | Prisma.AutoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -3305,6 +3309,7 @@ export type AutoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Autos.
    */
   data: Prisma.AutoCreateManyInput | Prisma.AutoCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -558,6 +558,7 @@ export type ImpuestoCreateOrConnectWithoutTransaccionInput = {
 
 export type ImpuestoCreateManyTransaccionInputEnvelope = {
   data: Prisma.ImpuestoCreateManyTransaccionInput | Prisma.ImpuestoCreateManyTransaccionInput[]
+  skipDuplicates?: boolean
 }
 
 export type ImpuestoUpsertWithWhereUniqueWithoutTransaccionInput = {
@@ -1392,6 +1393,7 @@ export type ImpuestoCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Impuestos.
    */
   data: Prisma.ImpuestoCreateManyInput | Prisma.ImpuestoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1410,6 +1412,7 @@ export type ImpuestoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Impuestos.
    */
   data: Prisma.ImpuestoCreateManyInput | Prisma.ImpuestoCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

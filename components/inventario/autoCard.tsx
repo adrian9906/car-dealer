@@ -42,14 +42,16 @@ export default function AutoCard({ vehicle }: { vehicle: Vehicle }) {
       if (!favorites.includes(vehicle.id_auto)) {
         localStorage.setItem(
           "favorites",
-          JSON.stringify([...favorites, vehicle.id_auto])
+          JSON.stringify([...favorites, vehicle.id_auto]),
         );
         window.dispatchEvent(new Event("favoritesUpdated"));
       }
     } else {
       localStorage.setItem(
         "favorites",
-        JSON.stringify(favorites.filter((id: string) => id !== vehicle.id_auto))
+        JSON.stringify(
+          favorites.filter((id: string) => id !== vehicle.id_auto),
+        ),
       );
       window.dispatchEvent(new Event("favoritesUpdated"));
     }
@@ -163,7 +165,14 @@ export default function AutoCard({ vehicle }: { vehicle: Vehicle }) {
                 Ver Detalles
               </Button>
             </Link>
-            <Link href="/cotizar" className="flex-1">
+            <Link
+              href={
+                vehicle.stock === "LOCAL"
+                  ? `/dealer/inventario/cotizar/${vehicle.id_auto}`
+                  : "/dealer/importacion"
+              }
+              className="flex-1"
+            >
               <Button
                 variant="outline"
                 className="w-full dark:hover:bg-primary"

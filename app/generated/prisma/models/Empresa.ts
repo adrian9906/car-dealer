@@ -1262,6 +1262,7 @@ export type EmpresaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Empresas.
    */
   data: Prisma.EmpresaCreateManyInput | Prisma.EmpresaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1280,6 +1281,7 @@ export type EmpresaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Empresas.
    */
   data: Prisma.EmpresaCreateManyInput | Prisma.EmpresaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

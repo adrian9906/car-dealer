@@ -803,6 +803,7 @@ export type AlquilerCreateOrConnectWithoutAutoInput = {
 
 export type AlquilerCreateManyAutoInputEnvelope = {
   data: Prisma.AlquilerCreateManyAutoInput | Prisma.AlquilerCreateManyAutoInput[]
+  skipDuplicates?: boolean
 }
 
 export type AlquilerUpsertWithWhereUniqueWithoutAutoInput = {
@@ -887,6 +888,7 @@ export type AlquilerCreateOrConnectWithoutClienteInput = {
 
 export type AlquilerCreateManyClienteInputEnvelope = {
   data: Prisma.AlquilerCreateManyClienteInput | Prisma.AlquilerCreateManyClienteInput[]
+  skipDuplicates?: boolean
 }
 
 export type AlquilerUpsertWithWhereUniqueWithoutClienteInput = {
@@ -2071,6 +2073,7 @@ export type AlquilerCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Alquilers.
    */
   data: Prisma.AlquilerCreateManyInput | Prisma.AlquilerCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -2089,6 +2092,7 @@ export type AlquilerCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Alquilers.
    */
   data: Prisma.AlquilerCreateManyInput | Prisma.AlquilerCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

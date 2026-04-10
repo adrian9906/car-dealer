@@ -608,6 +608,7 @@ export type CuentaBancariaCreateOrConnectWithoutEmpresaInput = {
 
 export type CuentaBancariaCreateManyEmpresaInputEnvelope = {
   data: Prisma.CuentaBancariaCreateManyEmpresaInput | Prisma.CuentaBancariaCreateManyEmpresaInput[]
+  skipDuplicates?: boolean
 }
 
 export type CuentaBancariaUpsertWithWhereUniqueWithoutEmpresaInput = {
@@ -1562,6 +1563,7 @@ export type CuentaBancariaCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many CuentaBancarias.
    */
   data: Prisma.CuentaBancariaCreateManyInput | Prisma.CuentaBancariaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1580,6 +1582,7 @@ export type CuentaBancariaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * The data used to create many CuentaBancarias.
    */
   data: Prisma.CuentaBancariaCreateManyInput | Prisma.CuentaBancariaCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

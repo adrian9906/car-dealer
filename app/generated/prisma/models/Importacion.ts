@@ -687,6 +687,7 @@ export type ImportacionCreateOrConnectWithoutProveedorInput = {
 
 export type ImportacionCreateManyProveedorInputEnvelope = {
   data: Prisma.ImportacionCreateManyProveedorInput | Prisma.ImportacionCreateManyProveedorInput[]
+  skipDuplicates?: boolean
 }
 
 export type ImportacionUpsertWithWhereUniqueWithoutProveedorInput = {
@@ -1774,6 +1775,7 @@ export type ImportacionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many Importacions.
    */
   data: Prisma.ImportacionCreateManyInput | Prisma.ImportacionCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1792,6 +1794,7 @@ export type ImportacionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many Importacions.
    */
   data: Prisma.ImportacionCreateManyInput | Prisma.ImportacionCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -1972,6 +1972,7 @@ export type ClienteCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Clientes.
    */
   data: Prisma.ClienteCreateManyInput | Prisma.ClienteCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1990,6 +1991,7 @@ export type ClienteCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Clientes.
    */
   data: Prisma.ClienteCreateManyInput | Prisma.ClienteCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

@@ -1487,6 +1487,7 @@ export type ProveedorCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Proveedors.
    */
   data: Prisma.ProveedorCreateManyInput | Prisma.ProveedorCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1505,6 +1506,7 @@ export type ProveedorCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many Proveedors.
    */
   data: Prisma.ProveedorCreateManyInput | Prisma.ProveedorCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

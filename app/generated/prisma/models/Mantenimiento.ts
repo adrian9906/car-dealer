@@ -548,6 +548,7 @@ export type MantenimientoCreateOrConnectWithoutAutoInput = {
 
 export type MantenimientoCreateManyAutoInputEnvelope = {
   data: Prisma.MantenimientoCreateManyAutoInput | Prisma.MantenimientoCreateManyAutoInput[]
+  skipDuplicates?: boolean
 }
 
 export type MantenimientoUpsertWithWhereUniqueWithoutAutoInput = {
@@ -1382,6 +1383,7 @@ export type MantenimientoCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Mantenimientos.
    */
   data: Prisma.MantenimientoCreateManyInput | Prisma.MantenimientoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1400,6 +1402,7 @@ export type MantenimientoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * The data used to create many Mantenimientos.
    */
   data: Prisma.MantenimientoCreateManyInput | Prisma.MantenimientoCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

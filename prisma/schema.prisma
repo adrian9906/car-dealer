@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 model Empresa {
   id_empresa        String       @id @default(uuid())
@@ -170,17 +170,17 @@ model ImportacionCliente {
 
 model Venta {
   id_venta            String          @id @default(uuid())
-  id_auto             String          @unique
+  id_auto             String         
   id_cliente          String
-  id_empleado         String
+
   auto                Auto         @relation(fields: [id_auto], references: [id_auto])
   cliente             Cliente      @relation(fields: [id_cliente], references: [id_cliente])
-  empleado            Empleado     @relation(fields: [id_empleado], references: [id_empleado])
+ 
   
   fecha_venta         DateTime     @default(now())
   precio_venta        Float
   forma_pago          FormaPago
-  comision_vendedor   Float
+  comision_vendedor   Float?
   impuestos           Float
   estado_venta        EstadoVenta
   
@@ -228,7 +228,7 @@ model Empleado {
   fecha_contratacion  DateTime     @default(now())
   salario             Float
   
-  ventas              Venta[]
+  
   createdAt           DateTime     @default(now())
   updatedAt           DateTime     @updatedAt
 

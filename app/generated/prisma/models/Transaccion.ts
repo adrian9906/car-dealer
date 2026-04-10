@@ -860,6 +860,7 @@ export type TransaccionCreateOrConnectWithoutImportacionInput = {
 
 export type TransaccionCreateManyImportacionInputEnvelope = {
   data: Prisma.TransaccionCreateManyImportacionInput | Prisma.TransaccionCreateManyImportacionInput[]
+  skipDuplicates?: boolean
 }
 
 export type TransaccionUpsertWithWhereUniqueWithoutImportacionInput = {
@@ -945,6 +946,7 @@ export type TransaccionCreateOrConnectWithoutVentaInput = {
 
 export type TransaccionCreateManyVentaInputEnvelope = {
   data: Prisma.TransaccionCreateManyVentaInput | Prisma.TransaccionCreateManyVentaInput[]
+  skipDuplicates?: boolean
 }
 
 export type TransaccionUpsertWithWhereUniqueWithoutVentaInput = {
@@ -1008,6 +1010,7 @@ export type TransaccionCreateOrConnectWithoutAlquilerInput = {
 
 export type TransaccionCreateManyAlquilerInputEnvelope = {
   data: Prisma.TransaccionCreateManyAlquilerInput | Prisma.TransaccionCreateManyAlquilerInput[]
+  skipDuplicates?: boolean
 }
 
 export type TransaccionUpsertWithWhereUniqueWithoutAlquilerInput = {
@@ -1071,6 +1074,7 @@ export type TransaccionCreateOrConnectWithoutCuentaInput = {
 
 export type TransaccionCreateManyCuentaInputEnvelope = {
   data: Prisma.TransaccionCreateManyCuentaInput | Prisma.TransaccionCreateManyCuentaInput[]
+  skipDuplicates?: boolean
 }
 
 export type TransaccionUpsertWithWhereUniqueWithoutCuentaInput = {
@@ -2324,6 +2328,7 @@ export type TransaccionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many Transaccions.
    */
   data: Prisma.TransaccionCreateManyInput | Prisma.TransaccionCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -2342,6 +2347,7 @@ export type TransaccionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many Transaccions.
    */
   data: Prisma.TransaccionCreateManyInput | Prisma.TransaccionCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

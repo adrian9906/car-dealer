@@ -1558,6 +1558,9 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
@@ -1701,7 +1704,6 @@ export const VentaScalarFieldEnum = {
   id_venta: 'id_venta',
   id_auto: 'id_auto',
   id_cliente: 'id_cliente',
-  id_empleado: 'id_empleado',
   fecha_venta: 'fecha_venta',
   precio_venta: 'precio_venta',
   forma_pago: 'forma_pago',
@@ -1852,6 +1854,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
 export const NullsOrder = {
   first: 'first',
   last: 'last'
@@ -1874,9 +1884,23 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
 
 
 /**
+ * Reference to a field of type 'String[]'
+ */
+export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -1888,9 +1912,23 @@ export type EnumTipoProveedorFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'TipoProveedor[]'
+ */
+export type ListEnumTipoProveedorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoProveedor[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -1902,9 +1940,23 @@ export type EnumTipoCombustibleFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'TipoCombustible[]'
+ */
+export type ListEnumTipoCombustibleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCombustible[]'>
+    
+
+
+/**
  * Reference to a field of type 'TipoTransmision'
  */
 export type EnumTipoTransmisionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoTransmision'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoTransmision[]'
+ */
+export type ListEnumTipoTransmisionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoTransmision[]'>
     
 
 
@@ -1916,9 +1968,23 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
 
 
 /**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
  * Reference to a field of type 'EstadoAuto'
  */
 export type EnumEstadoAutoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoAuto'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoAuto[]'
+ */
+export type ListEnumEstadoAutoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoAuto[]'>
     
 
 
@@ -1930,9 +1996,23 @@ export type EnumTipoPropiedadFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'TipoPropiedad[]'
+ */
+export type ListEnumTipoPropiedadFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoPropiedad[]'>
+    
+
+
+/**
  * Reference to a field of type 'Stock'
  */
 export type EnumStockFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Stock'>
+    
+
+
+/**
+ * Reference to a field of type 'Stock[]'
+ */
+export type ListEnumStockFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Stock[]'>
     
 
 
@@ -1944,9 +2024,23 @@ export type EnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'Category[]'
+ */
+export type ListEnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Category[]'>
+    
+
+
+/**
  * Reference to a field of type 'TipoCliente'
  */
 export type EnumTipoClienteFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCliente'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoCliente[]'
+ */
+export type ListEnumTipoClienteFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCliente[]'>
     
 
 
@@ -1958,9 +2052,23 @@ export type EnumEstadoLicenciaFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'EstadoLicencia[]'
+ */
+export type ListEnumEstadoLicenciaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoLicencia[]'>
+    
+
+
+/**
  * Reference to a field of type 'EstadoImportacion'
  */
 export type EnumEstadoImportacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoImportacion'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoImportacion[]'
+ */
+export type ListEnumEstadoImportacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoImportacion[]'>
     
 
 
@@ -1972,9 +2080,23 @@ export type EnumEstadoSolicitudImportacionFieldRefInput<$PrismaModel> = FieldRef
 
 
 /**
+ * Reference to a field of type 'EstadoSolicitudImportacion[]'
+ */
+export type ListEnumEstadoSolicitudImportacionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoSolicitudImportacion[]'>
+    
+
+
+/**
  * Reference to a field of type 'FormaPago'
  */
 export type EnumFormaPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FormaPago'>
+    
+
+
+/**
+ * Reference to a field of type 'FormaPago[]'
+ */
+export type ListEnumFormaPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FormaPago[]'>
     
 
 
@@ -1986,9 +2108,23 @@ export type EnumEstadoVentaFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 
 
 /**
+ * Reference to a field of type 'EstadoVenta[]'
+ */
+export type ListEnumEstadoVentaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoVenta[]'>
+    
+
+
+/**
  * Reference to a field of type 'EstadoAlquiler'
  */
 export type EnumEstadoAlquilerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoAlquiler'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoAlquiler[]'
+ */
+export type ListEnumEstadoAlquilerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoAlquiler[]'>
     
 
 
@@ -2007,9 +2143,23 @@ export type EnumCargoEmpleadoFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'CargoEmpleado[]'
+ */
+export type ListEnumCargoEmpleadoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CargoEmpleado[]'>
+    
+
+
+/**
  * Reference to a field of type 'TipoMantenimiento'
  */
 export type EnumTipoMantenimientoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoMantenimiento'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoMantenimiento[]'
+ */
+export type ListEnumTipoMantenimientoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoMantenimiento[]'>
     
 
 
@@ -2021,9 +2171,23 @@ export type EnumTipoCuentaFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 
 
 /**
+ * Reference to a field of type 'TipoCuenta[]'
+ */
+export type ListEnumTipoCuentaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCuenta[]'>
+    
+
+
+/**
  * Reference to a field of type 'Moneda'
  */
 export type EnumMonedaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Moneda'>
+    
+
+
+/**
+ * Reference to a field of type 'Moneda[]'
+ */
+export type ListEnumMonedaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Moneda[]'>
     
 
 
@@ -2035,9 +2199,23 @@ export type EnumEstadoCuentaFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'EstadoCuenta[]'
+ */
+export type ListEnumEstadoCuentaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoCuenta[]'>
+    
+
+
+/**
  * Reference to a field of type 'TipoTransaccion'
  */
 export type EnumTipoTransaccionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoTransaccion'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoTransaccion[]'
+ */
+export type ListEnumTipoTransaccionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoTransaccion[]'>
     
 
 
@@ -2049,9 +2227,23 @@ export type EnumMetodoPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 
 
 /**
+ * Reference to a field of type 'MetodoPago[]'
+ */
+export type ListEnumMetodoPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MetodoPago[]'>
+    
+
+
+/**
  * Reference to a field of type 'EstadoTransaccion'
  */
 export type EnumEstadoTransaccionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoTransaccion'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoTransaccion[]'
+ */
+export type ListEnumEstadoTransaccionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoTransaccion[]'>
     
 
 
@@ -2063,6 +2255,13 @@ export type EnumEstadoFacturaFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'EstadoFactura[]'
+ */
+export type ListEnumEstadoFacturaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoFactura[]'>
+    
+
+
+/**
  * Reference to a field of type 'TipoImpuesto'
  */
 export type EnumTipoImpuestoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoImpuesto'>
@@ -2070,9 +2269,23 @@ export type EnumTipoImpuestoFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'TipoImpuesto[]'
+ */
+export type ListEnumTipoImpuestoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoImpuesto[]'>
+    
+
+
+/**
  * Reference to a field of type 'EstadoImpuesto'
  */
 export type EnumEstadoImpuestoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoImpuesto'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoImpuesto[]'
+ */
+export type ListEnumEstadoImpuestoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoImpuesto[]'>
     
 
 /**

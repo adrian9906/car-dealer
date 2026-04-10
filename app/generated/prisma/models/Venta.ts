@@ -42,7 +42,6 @@ export type VentaMinAggregateOutputType = {
   id_venta: string | null
   id_auto: string | null
   id_cliente: string | null
-  id_empleado: string | null
   fecha_venta: Date | null
   precio_venta: number | null
   forma_pago: $Enums.FormaPago | null
@@ -57,7 +56,6 @@ export type VentaMaxAggregateOutputType = {
   id_venta: string | null
   id_auto: string | null
   id_cliente: string | null
-  id_empleado: string | null
   fecha_venta: Date | null
   precio_venta: number | null
   forma_pago: $Enums.FormaPago | null
@@ -72,7 +70,6 @@ export type VentaCountAggregateOutputType = {
   id_venta: number
   id_auto: number
   id_cliente: number
-  id_empleado: number
   fecha_venta: number
   precio_venta: number
   forma_pago: number
@@ -101,7 +98,6 @@ export type VentaMinAggregateInputType = {
   id_venta?: true
   id_auto?: true
   id_cliente?: true
-  id_empleado?: true
   fecha_venta?: true
   precio_venta?: true
   forma_pago?: true
@@ -116,7 +112,6 @@ export type VentaMaxAggregateInputType = {
   id_venta?: true
   id_auto?: true
   id_cliente?: true
-  id_empleado?: true
   fecha_venta?: true
   precio_venta?: true
   forma_pago?: true
@@ -131,7 +126,6 @@ export type VentaCountAggregateInputType = {
   id_venta?: true
   id_auto?: true
   id_cliente?: true
-  id_empleado?: true
   fecha_venta?: true
   precio_venta?: true
   forma_pago?: true
@@ -233,11 +227,10 @@ export type VentaGroupByOutputType = {
   id_venta: string
   id_auto: string
   id_cliente: string
-  id_empleado: string
   fecha_venta: Date
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt: Date
@@ -271,18 +264,16 @@ export type VentaWhereInput = {
   id_venta?: Prisma.StringFilter<"Venta"> | string
   id_auto?: Prisma.StringFilter<"Venta"> | string
   id_cliente?: Prisma.StringFilter<"Venta"> | string
-  id_empleado?: Prisma.StringFilter<"Venta"> | string
   fecha_venta?: Prisma.DateTimeFilter<"Venta"> | Date | string
   precio_venta?: Prisma.FloatFilter<"Venta"> | number
   forma_pago?: Prisma.EnumFormaPagoFilter<"Venta"> | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFilter<"Venta"> | number
+  comision_vendedor?: Prisma.FloatNullableFilter<"Venta"> | number | null
   impuestos?: Prisma.FloatFilter<"Venta"> | number
   estado_venta?: Prisma.EnumEstadoVentaFilter<"Venta"> | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFilter<"Venta"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Venta"> | Date | string
   auto?: Prisma.XOR<Prisma.AutoScalarRelationFilter, Prisma.AutoWhereInput>
   cliente?: Prisma.XOR<Prisma.ClienteScalarRelationFilter, Prisma.ClienteWhereInput>
-  empleado?: Prisma.XOR<Prisma.EmpleadoScalarRelationFilter, Prisma.EmpleadoWhereInput>
   facturas?: Prisma.FacturaListRelationFilter
   transacciones?: Prisma.TransaccionListRelationFilter
 }
@@ -291,54 +282,49 @@ export type VentaOrderByWithRelationInput = {
   id_venta?: Prisma.SortOrder
   id_auto?: Prisma.SortOrder
   id_cliente?: Prisma.SortOrder
-  id_empleado?: Prisma.SortOrder
   fecha_venta?: Prisma.SortOrder
   precio_venta?: Prisma.SortOrder
   forma_pago?: Prisma.SortOrder
-  comision_vendedor?: Prisma.SortOrder
+  comision_vendedor?: Prisma.SortOrderInput | Prisma.SortOrder
   impuestos?: Prisma.SortOrder
   estado_venta?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   auto?: Prisma.AutoOrderByWithRelationInput
   cliente?: Prisma.ClienteOrderByWithRelationInput
-  empleado?: Prisma.EmpleadoOrderByWithRelationInput
   facturas?: Prisma.FacturaOrderByRelationAggregateInput
   transacciones?: Prisma.TransaccionOrderByRelationAggregateInput
 }
 
 export type VentaWhereUniqueInput = Prisma.AtLeast<{
   id_venta?: string
-  id_auto?: string
   AND?: Prisma.VentaWhereInput | Prisma.VentaWhereInput[]
   OR?: Prisma.VentaWhereInput[]
   NOT?: Prisma.VentaWhereInput | Prisma.VentaWhereInput[]
+  id_auto?: Prisma.StringFilter<"Venta"> | string
   id_cliente?: Prisma.StringFilter<"Venta"> | string
-  id_empleado?: Prisma.StringFilter<"Venta"> | string
   fecha_venta?: Prisma.DateTimeFilter<"Venta"> | Date | string
   precio_venta?: Prisma.FloatFilter<"Venta"> | number
   forma_pago?: Prisma.EnumFormaPagoFilter<"Venta"> | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFilter<"Venta"> | number
+  comision_vendedor?: Prisma.FloatNullableFilter<"Venta"> | number | null
   impuestos?: Prisma.FloatFilter<"Venta"> | number
   estado_venta?: Prisma.EnumEstadoVentaFilter<"Venta"> | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFilter<"Venta"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Venta"> | Date | string
   auto?: Prisma.XOR<Prisma.AutoScalarRelationFilter, Prisma.AutoWhereInput>
   cliente?: Prisma.XOR<Prisma.ClienteScalarRelationFilter, Prisma.ClienteWhereInput>
-  empleado?: Prisma.XOR<Prisma.EmpleadoScalarRelationFilter, Prisma.EmpleadoWhereInput>
   facturas?: Prisma.FacturaListRelationFilter
   transacciones?: Prisma.TransaccionListRelationFilter
-}, "id_venta" | "id_auto">
+}, "id_venta">
 
 export type VentaOrderByWithAggregationInput = {
   id_venta?: Prisma.SortOrder
   id_auto?: Prisma.SortOrder
   id_cliente?: Prisma.SortOrder
-  id_empleado?: Prisma.SortOrder
   fecha_venta?: Prisma.SortOrder
   precio_venta?: Prisma.SortOrder
   forma_pago?: Prisma.SortOrder
-  comision_vendedor?: Prisma.SortOrder
+  comision_vendedor?: Prisma.SortOrderInput | Prisma.SortOrder
   impuestos?: Prisma.SortOrder
   estado_venta?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -357,11 +343,10 @@ export type VentaScalarWhereWithAggregatesInput = {
   id_venta?: Prisma.StringWithAggregatesFilter<"Venta"> | string
   id_auto?: Prisma.StringWithAggregatesFilter<"Venta"> | string
   id_cliente?: Prisma.StringWithAggregatesFilter<"Venta"> | string
-  id_empleado?: Prisma.StringWithAggregatesFilter<"Venta"> | string
   fecha_venta?: Prisma.DateTimeWithAggregatesFilter<"Venta"> | Date | string
   precio_venta?: Prisma.FloatWithAggregatesFilter<"Venta"> | number
   forma_pago?: Prisma.EnumFormaPagoWithAggregatesFilter<"Venta"> | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatWithAggregatesFilter<"Venta"> | number
+  comision_vendedor?: Prisma.FloatNullableWithAggregatesFilter<"Venta"> | number | null
   impuestos?: Prisma.FloatWithAggregatesFilter<"Venta"> | number
   estado_venta?: Prisma.EnumEstadoVentaWithAggregatesFilter<"Venta"> | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Venta"> | Date | string
@@ -373,14 +358,13 @@ export type VentaCreateInput = {
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
   updatedAt?: Date | string
   auto: Prisma.AutoCreateNestedOneWithoutVentasInput
   cliente: Prisma.ClienteCreateNestedOneWithoutVentasInput
-  empleado: Prisma.EmpleadoCreateNestedOneWithoutVentasInput
   facturas?: Prisma.FacturaCreateNestedManyWithoutVentaInput
   transacciones?: Prisma.TransaccionCreateNestedManyWithoutVentaInput
 }
@@ -389,11 +373,10 @@ export type VentaUncheckedCreateInput = {
   id_venta?: string
   id_auto: string
   id_cliente: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -407,14 +390,13 @@ export type VentaUpdateInput = {
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auto?: Prisma.AutoUpdateOneRequiredWithoutVentasNestedInput
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutVentasNestedInput
-  empleado?: Prisma.EmpleadoUpdateOneRequiredWithoutVentasNestedInput
   facturas?: Prisma.FacturaUpdateManyWithoutVentaNestedInput
   transacciones?: Prisma.TransaccionUpdateManyWithoutVentaNestedInput
 }
@@ -423,11 +405,10 @@ export type VentaUncheckedUpdateInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_auto?: Prisma.StringFieldUpdateOperationsInput | string
   id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -440,11 +421,10 @@ export type VentaCreateManyInput = {
   id_venta?: string
   id_auto: string
   id_cliente: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -456,7 +436,7 @@ export type VentaUpdateManyMutationInput = {
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -467,11 +447,10 @@ export type VentaUncheckedUpdateManyInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_auto?: Prisma.StringFieldUpdateOperationsInput | string
   id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -492,7 +471,6 @@ export type VentaCountOrderByAggregateInput = {
   id_venta?: Prisma.SortOrder
   id_auto?: Prisma.SortOrder
   id_cliente?: Prisma.SortOrder
-  id_empleado?: Prisma.SortOrder
   fecha_venta?: Prisma.SortOrder
   precio_venta?: Prisma.SortOrder
   forma_pago?: Prisma.SortOrder
@@ -513,7 +491,6 @@ export type VentaMaxOrderByAggregateInput = {
   id_venta?: Prisma.SortOrder
   id_auto?: Prisma.SortOrder
   id_cliente?: Prisma.SortOrder
-  id_empleado?: Prisma.SortOrder
   fecha_venta?: Prisma.SortOrder
   precio_venta?: Prisma.SortOrder
   forma_pago?: Prisma.SortOrder
@@ -528,7 +505,6 @@ export type VentaMinOrderByAggregateInput = {
   id_venta?: Prisma.SortOrder
   id_auto?: Prisma.SortOrder
   id_cliente?: Prisma.SortOrder
-  id_empleado?: Prisma.SortOrder
   fecha_venta?: Prisma.SortOrder
   precio_venta?: Prisma.SortOrder
   forma_pago?: Prisma.SortOrder
@@ -642,48 +618,6 @@ export type EnumEstadoVentaFieldUpdateOperationsInput = {
   set?: $Enums.EstadoVenta
 }
 
-export type VentaCreateNestedManyWithoutEmpleadoInput = {
-  create?: Prisma.XOR<Prisma.VentaCreateWithoutEmpleadoInput, Prisma.VentaUncheckedCreateWithoutEmpleadoInput> | Prisma.VentaCreateWithoutEmpleadoInput[] | Prisma.VentaUncheckedCreateWithoutEmpleadoInput[]
-  connectOrCreate?: Prisma.VentaCreateOrConnectWithoutEmpleadoInput | Prisma.VentaCreateOrConnectWithoutEmpleadoInput[]
-  createMany?: Prisma.VentaCreateManyEmpleadoInputEnvelope
-  connect?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-}
-
-export type VentaUncheckedCreateNestedManyWithoutEmpleadoInput = {
-  create?: Prisma.XOR<Prisma.VentaCreateWithoutEmpleadoInput, Prisma.VentaUncheckedCreateWithoutEmpleadoInput> | Prisma.VentaCreateWithoutEmpleadoInput[] | Prisma.VentaUncheckedCreateWithoutEmpleadoInput[]
-  connectOrCreate?: Prisma.VentaCreateOrConnectWithoutEmpleadoInput | Prisma.VentaCreateOrConnectWithoutEmpleadoInput[]
-  createMany?: Prisma.VentaCreateManyEmpleadoInputEnvelope
-  connect?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-}
-
-export type VentaUpdateManyWithoutEmpleadoNestedInput = {
-  create?: Prisma.XOR<Prisma.VentaCreateWithoutEmpleadoInput, Prisma.VentaUncheckedCreateWithoutEmpleadoInput> | Prisma.VentaCreateWithoutEmpleadoInput[] | Prisma.VentaUncheckedCreateWithoutEmpleadoInput[]
-  connectOrCreate?: Prisma.VentaCreateOrConnectWithoutEmpleadoInput | Prisma.VentaCreateOrConnectWithoutEmpleadoInput[]
-  upsert?: Prisma.VentaUpsertWithWhereUniqueWithoutEmpleadoInput | Prisma.VentaUpsertWithWhereUniqueWithoutEmpleadoInput[]
-  createMany?: Prisma.VentaCreateManyEmpleadoInputEnvelope
-  set?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  disconnect?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  delete?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  connect?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  update?: Prisma.VentaUpdateWithWhereUniqueWithoutEmpleadoInput | Prisma.VentaUpdateWithWhereUniqueWithoutEmpleadoInput[]
-  updateMany?: Prisma.VentaUpdateManyWithWhereWithoutEmpleadoInput | Prisma.VentaUpdateManyWithWhereWithoutEmpleadoInput[]
-  deleteMany?: Prisma.VentaScalarWhereInput | Prisma.VentaScalarWhereInput[]
-}
-
-export type VentaUncheckedUpdateManyWithoutEmpleadoNestedInput = {
-  create?: Prisma.XOR<Prisma.VentaCreateWithoutEmpleadoInput, Prisma.VentaUncheckedCreateWithoutEmpleadoInput> | Prisma.VentaCreateWithoutEmpleadoInput[] | Prisma.VentaUncheckedCreateWithoutEmpleadoInput[]
-  connectOrCreate?: Prisma.VentaCreateOrConnectWithoutEmpleadoInput | Prisma.VentaCreateOrConnectWithoutEmpleadoInput[]
-  upsert?: Prisma.VentaUpsertWithWhereUniqueWithoutEmpleadoInput | Prisma.VentaUpsertWithWhereUniqueWithoutEmpleadoInput[]
-  createMany?: Prisma.VentaCreateManyEmpleadoInputEnvelope
-  set?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  disconnect?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  delete?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  connect?: Prisma.VentaWhereUniqueInput | Prisma.VentaWhereUniqueInput[]
-  update?: Prisma.VentaUpdateWithWhereUniqueWithoutEmpleadoInput | Prisma.VentaUpdateWithWhereUniqueWithoutEmpleadoInput[]
-  updateMany?: Prisma.VentaUpdateManyWithWhereWithoutEmpleadoInput | Prisma.VentaUpdateManyWithWhereWithoutEmpleadoInput[]
-  deleteMany?: Prisma.VentaScalarWhereInput | Prisma.VentaScalarWhereInput[]
-}
-
 export type VentaCreateNestedOneWithoutTransaccionesInput = {
   create?: Prisma.XOR<Prisma.VentaCreateWithoutTransaccionesInput, Prisma.VentaUncheckedCreateWithoutTransaccionesInput>
   connectOrCreate?: Prisma.VentaCreateOrConnectWithoutTransaccionesInput
@@ -721,13 +655,12 @@ export type VentaCreateWithoutAutoInput = {
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutVentasInput
-  empleado: Prisma.EmpleadoCreateNestedOneWithoutVentasInput
   facturas?: Prisma.FacturaCreateNestedManyWithoutVentaInput
   transacciones?: Prisma.TransaccionCreateNestedManyWithoutVentaInput
 }
@@ -735,11 +668,10 @@ export type VentaCreateWithoutAutoInput = {
 export type VentaUncheckedCreateWithoutAutoInput = {
   id_venta?: string
   id_cliente: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -755,6 +687,7 @@ export type VentaCreateOrConnectWithoutAutoInput = {
 
 export type VentaCreateManyAutoInputEnvelope = {
   data: Prisma.VentaCreateManyAutoInput | Prisma.VentaCreateManyAutoInput[]
+  skipDuplicates?: boolean
 }
 
 export type VentaUpsertWithWhereUniqueWithoutAutoInput = {
@@ -780,11 +713,10 @@ export type VentaScalarWhereInput = {
   id_venta?: Prisma.StringFilter<"Venta"> | string
   id_auto?: Prisma.StringFilter<"Venta"> | string
   id_cliente?: Prisma.StringFilter<"Venta"> | string
-  id_empleado?: Prisma.StringFilter<"Venta"> | string
   fecha_venta?: Prisma.DateTimeFilter<"Venta"> | Date | string
   precio_venta?: Prisma.FloatFilter<"Venta"> | number
   forma_pago?: Prisma.EnumFormaPagoFilter<"Venta"> | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFilter<"Venta"> | number
+  comision_vendedor?: Prisma.FloatNullableFilter<"Venta"> | number | null
   impuestos?: Prisma.FloatFilter<"Venta"> | number
   estado_venta?: Prisma.EnumEstadoVentaFilter<"Venta"> | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFilter<"Venta"> | Date | string
@@ -796,13 +728,12 @@ export type VentaCreateWithoutClienteInput = {
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
   updatedAt?: Date | string
   auto: Prisma.AutoCreateNestedOneWithoutVentasInput
-  empleado: Prisma.EmpleadoCreateNestedOneWithoutVentasInput
   facturas?: Prisma.FacturaCreateNestedManyWithoutVentaInput
   transacciones?: Prisma.TransaccionCreateNestedManyWithoutVentaInput
 }
@@ -810,11 +741,10 @@ export type VentaCreateWithoutClienteInput = {
 export type VentaUncheckedCreateWithoutClienteInput = {
   id_venta?: string
   id_auto: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -830,6 +760,7 @@ export type VentaCreateOrConnectWithoutClienteInput = {
 
 export type VentaCreateManyClienteInputEnvelope = {
   data: Prisma.VentaCreateManyClienteInput | Prisma.VentaCreateManyClienteInput[]
+  skipDuplicates?: boolean
 }
 
 export type VentaUpsertWithWhereUniqueWithoutClienteInput = {
@@ -848,76 +779,18 @@ export type VentaUpdateManyWithWhereWithoutClienteInput = {
   data: Prisma.XOR<Prisma.VentaUpdateManyMutationInput, Prisma.VentaUncheckedUpdateManyWithoutClienteInput>
 }
 
-export type VentaCreateWithoutEmpleadoInput = {
-  id_venta?: string
-  fecha_venta?: Date | string
-  precio_venta: number
-  forma_pago: $Enums.FormaPago
-  comision_vendedor: number
-  impuestos: number
-  estado_venta: $Enums.EstadoVenta
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  auto: Prisma.AutoCreateNestedOneWithoutVentasInput
-  cliente: Prisma.ClienteCreateNestedOneWithoutVentasInput
-  facturas?: Prisma.FacturaCreateNestedManyWithoutVentaInput
-  transacciones?: Prisma.TransaccionCreateNestedManyWithoutVentaInput
-}
-
-export type VentaUncheckedCreateWithoutEmpleadoInput = {
-  id_venta?: string
-  id_auto: string
-  id_cliente: string
-  fecha_venta?: Date | string
-  precio_venta: number
-  forma_pago: $Enums.FormaPago
-  comision_vendedor: number
-  impuestos: number
-  estado_venta: $Enums.EstadoVenta
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  facturas?: Prisma.FacturaUncheckedCreateNestedManyWithoutVentaInput
-  transacciones?: Prisma.TransaccionUncheckedCreateNestedManyWithoutVentaInput
-}
-
-export type VentaCreateOrConnectWithoutEmpleadoInput = {
-  where: Prisma.VentaWhereUniqueInput
-  create: Prisma.XOR<Prisma.VentaCreateWithoutEmpleadoInput, Prisma.VentaUncheckedCreateWithoutEmpleadoInput>
-}
-
-export type VentaCreateManyEmpleadoInputEnvelope = {
-  data: Prisma.VentaCreateManyEmpleadoInput | Prisma.VentaCreateManyEmpleadoInput[]
-}
-
-export type VentaUpsertWithWhereUniqueWithoutEmpleadoInput = {
-  where: Prisma.VentaWhereUniqueInput
-  update: Prisma.XOR<Prisma.VentaUpdateWithoutEmpleadoInput, Prisma.VentaUncheckedUpdateWithoutEmpleadoInput>
-  create: Prisma.XOR<Prisma.VentaCreateWithoutEmpleadoInput, Prisma.VentaUncheckedCreateWithoutEmpleadoInput>
-}
-
-export type VentaUpdateWithWhereUniqueWithoutEmpleadoInput = {
-  where: Prisma.VentaWhereUniqueInput
-  data: Prisma.XOR<Prisma.VentaUpdateWithoutEmpleadoInput, Prisma.VentaUncheckedUpdateWithoutEmpleadoInput>
-}
-
-export type VentaUpdateManyWithWhereWithoutEmpleadoInput = {
-  where: Prisma.VentaScalarWhereInput
-  data: Prisma.XOR<Prisma.VentaUpdateManyMutationInput, Prisma.VentaUncheckedUpdateManyWithoutEmpleadoInput>
-}
-
 export type VentaCreateWithoutTransaccionesInput = {
   id_venta?: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
   updatedAt?: Date | string
   auto: Prisma.AutoCreateNestedOneWithoutVentasInput
   cliente: Prisma.ClienteCreateNestedOneWithoutVentasInput
-  empleado: Prisma.EmpleadoCreateNestedOneWithoutVentasInput
   facturas?: Prisma.FacturaCreateNestedManyWithoutVentaInput
 }
 
@@ -925,11 +798,10 @@ export type VentaUncheckedCreateWithoutTransaccionesInput = {
   id_venta?: string
   id_auto: string
   id_cliente: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -958,14 +830,13 @@ export type VentaUpdateWithoutTransaccionesInput = {
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auto?: Prisma.AutoUpdateOneRequiredWithoutVentasNestedInput
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutVentasNestedInput
-  empleado?: Prisma.EmpleadoUpdateOneRequiredWithoutVentasNestedInput
   facturas?: Prisma.FacturaUpdateManyWithoutVentaNestedInput
 }
 
@@ -973,11 +844,10 @@ export type VentaUncheckedUpdateWithoutTransaccionesInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_auto?: Prisma.StringFieldUpdateOperationsInput | string
   id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -990,14 +860,13 @@ export type VentaCreateWithoutFacturasInput = {
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
   updatedAt?: Date | string
   auto: Prisma.AutoCreateNestedOneWithoutVentasInput
   cliente: Prisma.ClienteCreateNestedOneWithoutVentasInput
-  empleado: Prisma.EmpleadoCreateNestedOneWithoutVentasInput
   transacciones?: Prisma.TransaccionCreateNestedManyWithoutVentaInput
 }
 
@@ -1005,11 +874,10 @@ export type VentaUncheckedCreateWithoutFacturasInput = {
   id_venta?: string
   id_auto: string
   id_cliente: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -1038,14 +906,13 @@ export type VentaUpdateWithoutFacturasInput = {
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auto?: Prisma.AutoUpdateOneRequiredWithoutVentasNestedInput
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutVentasNestedInput
-  empleado?: Prisma.EmpleadoUpdateOneRequiredWithoutVentasNestedInput
   transacciones?: Prisma.TransaccionUpdateManyWithoutVentaNestedInput
 }
 
@@ -1053,11 +920,10 @@ export type VentaUncheckedUpdateWithoutFacturasInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_auto?: Prisma.StringFieldUpdateOperationsInput | string
   id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1068,11 +934,10 @@ export type VentaUncheckedUpdateWithoutFacturasInput = {
 export type VentaCreateManyAutoInput = {
   id_venta?: string
   id_cliente: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -1084,13 +949,12 @@ export type VentaUpdateWithoutAutoInput = {
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutVentasNestedInput
-  empleado?: Prisma.EmpleadoUpdateOneRequiredWithoutVentasNestedInput
   facturas?: Prisma.FacturaUpdateManyWithoutVentaNestedInput
   transacciones?: Prisma.TransaccionUpdateManyWithoutVentaNestedInput
 }
@@ -1098,11 +962,10 @@ export type VentaUpdateWithoutAutoInput = {
 export type VentaUncheckedUpdateWithoutAutoInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1114,11 +977,10 @@ export type VentaUncheckedUpdateWithoutAutoInput = {
 export type VentaUncheckedUpdateManyWithoutAutoInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1128,11 +990,10 @@ export type VentaUncheckedUpdateManyWithoutAutoInput = {
 export type VentaCreateManyClienteInput = {
   id_venta?: string
   id_auto: string
-  id_empleado: string
   fecha_venta?: Date | string
   precio_venta: number
   forma_pago: $Enums.FormaPago
-  comision_vendedor: number
+  comision_vendedor?: number | null
   impuestos: number
   estado_venta: $Enums.EstadoVenta
   createdAt?: Date | string
@@ -1144,13 +1005,12 @@ export type VentaUpdateWithoutClienteInput = {
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   auto?: Prisma.AutoUpdateOneRequiredWithoutVentasNestedInput
-  empleado?: Prisma.EmpleadoUpdateOneRequiredWithoutVentasNestedInput
   facturas?: Prisma.FacturaUpdateManyWithoutVentaNestedInput
   transacciones?: Prisma.TransaccionUpdateManyWithoutVentaNestedInput
 }
@@ -1158,11 +1018,10 @@ export type VentaUpdateWithoutClienteInput = {
 export type VentaUncheckedUpdateWithoutClienteInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_auto?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1174,71 +1033,10 @@ export type VentaUncheckedUpdateWithoutClienteInput = {
 export type VentaUncheckedUpdateManyWithoutClienteInput = {
   id_venta?: Prisma.StringFieldUpdateOperationsInput | string
   id_auto?: Prisma.StringFieldUpdateOperationsInput | string
-  id_empleado?: Prisma.StringFieldUpdateOperationsInput | string
   fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
   forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
-  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
-  estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type VentaCreateManyEmpleadoInput = {
-  id_venta?: string
-  id_auto: string
-  id_cliente: string
-  fecha_venta?: Date | string
-  precio_venta: number
-  forma_pago: $Enums.FormaPago
-  comision_vendedor: number
-  impuestos: number
-  estado_venta: $Enums.EstadoVenta
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type VentaUpdateWithoutEmpleadoInput = {
-  id_venta?: Prisma.StringFieldUpdateOperationsInput | string
-  fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
-  forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
-  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
-  estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  auto?: Prisma.AutoUpdateOneRequiredWithoutVentasNestedInput
-  cliente?: Prisma.ClienteUpdateOneRequiredWithoutVentasNestedInput
-  facturas?: Prisma.FacturaUpdateManyWithoutVentaNestedInput
-  transacciones?: Prisma.TransaccionUpdateManyWithoutVentaNestedInput
-}
-
-export type VentaUncheckedUpdateWithoutEmpleadoInput = {
-  id_venta?: Prisma.StringFieldUpdateOperationsInput | string
-  id_auto?: Prisma.StringFieldUpdateOperationsInput | string
-  id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
-  forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
-  impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
-  estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  facturas?: Prisma.FacturaUncheckedUpdateManyWithoutVentaNestedInput
-  transacciones?: Prisma.TransaccionUncheckedUpdateManyWithoutVentaNestedInput
-}
-
-export type VentaUncheckedUpdateManyWithoutEmpleadoInput = {
-  id_venta?: Prisma.StringFieldUpdateOperationsInput | string
-  id_auto?: Prisma.StringFieldUpdateOperationsInput | string
-  id_cliente?: Prisma.StringFieldUpdateOperationsInput | string
-  fecha_venta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  precio_venta?: Prisma.FloatFieldUpdateOperationsInput | number
-  forma_pago?: Prisma.EnumFormaPagoFieldUpdateOperationsInput | $Enums.FormaPago
-  comision_vendedor?: Prisma.FloatFieldUpdateOperationsInput | number
+  comision_vendedor?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   impuestos?: Prisma.FloatFieldUpdateOperationsInput | number
   estado_venta?: Prisma.EnumEstadoVentaFieldUpdateOperationsInput | $Enums.EstadoVenta
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1289,7 +1087,6 @@ export type VentaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id_venta?: boolean
   id_auto?: boolean
   id_cliente?: boolean
-  id_empleado?: boolean
   fecha_venta?: boolean
   precio_venta?: boolean
   forma_pago?: boolean
@@ -1300,7 +1097,6 @@ export type VentaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedAt?: boolean
   auto?: boolean | Prisma.AutoDefaultArgs<ExtArgs>
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
-  empleado?: boolean | Prisma.EmpleadoDefaultArgs<ExtArgs>
   facturas?: boolean | Prisma.Venta$facturasArgs<ExtArgs>
   transacciones?: boolean | Prisma.Venta$transaccionesArgs<ExtArgs>
   _count?: boolean | Prisma.VentaCountOutputTypeDefaultArgs<ExtArgs>
@@ -1310,7 +1106,6 @@ export type VentaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id_venta?: boolean
   id_auto?: boolean
   id_cliente?: boolean
-  id_empleado?: boolean
   fecha_venta?: boolean
   precio_venta?: boolean
   forma_pago?: boolean
@@ -1321,14 +1116,12 @@ export type VentaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   auto?: boolean | Prisma.AutoDefaultArgs<ExtArgs>
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
-  empleado?: boolean | Prisma.EmpleadoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["venta"]>
 
 export type VentaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id_venta?: boolean
   id_auto?: boolean
   id_cliente?: boolean
-  id_empleado?: boolean
   fecha_venta?: boolean
   precio_venta?: boolean
   forma_pago?: boolean
@@ -1339,14 +1132,12 @@ export type VentaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   auto?: boolean | Prisma.AutoDefaultArgs<ExtArgs>
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
-  empleado?: boolean | Prisma.EmpleadoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["venta"]>
 
 export type VentaSelectScalar = {
   id_venta?: boolean
   id_auto?: boolean
   id_cliente?: boolean
-  id_empleado?: boolean
   fecha_venta?: boolean
   precio_venta?: boolean
   forma_pago?: boolean
@@ -1357,11 +1148,10 @@ export type VentaSelectScalar = {
   updatedAt?: boolean
 }
 
-export type VentaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_venta" | "id_auto" | "id_cliente" | "id_empleado" | "fecha_venta" | "precio_venta" | "forma_pago" | "comision_vendedor" | "impuestos" | "estado_venta" | "createdAt" | "updatedAt", ExtArgs["result"]["venta"]>
+export type VentaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id_venta" | "id_auto" | "id_cliente" | "fecha_venta" | "precio_venta" | "forma_pago" | "comision_vendedor" | "impuestos" | "estado_venta" | "createdAt" | "updatedAt", ExtArgs["result"]["venta"]>
 export type VentaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auto?: boolean | Prisma.AutoDefaultArgs<ExtArgs>
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
-  empleado?: boolean | Prisma.EmpleadoDefaultArgs<ExtArgs>
   facturas?: boolean | Prisma.Venta$facturasArgs<ExtArgs>
   transacciones?: boolean | Prisma.Venta$transaccionesArgs<ExtArgs>
   _count?: boolean | Prisma.VentaCountOutputTypeDefaultArgs<ExtArgs>
@@ -1369,12 +1159,10 @@ export type VentaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type VentaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auto?: boolean | Prisma.AutoDefaultArgs<ExtArgs>
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
-  empleado?: boolean | Prisma.EmpleadoDefaultArgs<ExtArgs>
 }
 export type VentaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   auto?: boolean | Prisma.AutoDefaultArgs<ExtArgs>
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
-  empleado?: boolean | Prisma.EmpleadoDefaultArgs<ExtArgs>
 }
 
 export type $VentaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1382,7 +1170,6 @@ export type $VentaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     auto: Prisma.$AutoPayload<ExtArgs>
     cliente: Prisma.$ClientePayload<ExtArgs>
-    empleado: Prisma.$EmpleadoPayload<ExtArgs>
     facturas: Prisma.$FacturaPayload<ExtArgs>[]
     transacciones: Prisma.$TransaccionPayload<ExtArgs>[]
   }
@@ -1390,11 +1177,10 @@ export type $VentaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id_venta: string
     id_auto: string
     id_cliente: string
-    id_empleado: string
     fecha_venta: Date
     precio_venta: number
     forma_pago: $Enums.FormaPago
-    comision_vendedor: number
+    comision_vendedor: number | null
     impuestos: number
     estado_venta: $Enums.EstadoVenta
     createdAt: Date
@@ -1795,7 +1581,6 @@ export interface Prisma__VentaClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   auto<T extends Prisma.AutoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AutoDefaultArgs<ExtArgs>>): Prisma.Prisma__AutoClient<runtime.Types.Result.GetResult<Prisma.$AutoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   cliente<T extends Prisma.ClienteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClienteDefaultArgs<ExtArgs>>): Prisma.Prisma__ClienteClient<runtime.Types.Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  empleado<T extends Prisma.EmpleadoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmpleadoDefaultArgs<ExtArgs>>): Prisma.Prisma__EmpleadoClient<runtime.Types.Result.GetResult<Prisma.$EmpleadoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   facturas<T extends Prisma.Venta$facturasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venta$facturasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FacturaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transacciones<T extends Prisma.Venta$transaccionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venta$transaccionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransaccionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1830,7 +1615,6 @@ export interface VentaFieldRefs {
   readonly id_venta: Prisma.FieldRef<"Venta", 'String'>
   readonly id_auto: Prisma.FieldRef<"Venta", 'String'>
   readonly id_cliente: Prisma.FieldRef<"Venta", 'String'>
-  readonly id_empleado: Prisma.FieldRef<"Venta", 'String'>
   readonly fecha_venta: Prisma.FieldRef<"Venta", 'DateTime'>
   readonly precio_venta: Prisma.FieldRef<"Venta", 'Float'>
   readonly forma_pago: Prisma.FieldRef<"Venta", 'FormaPago'>
@@ -2073,6 +1857,7 @@ export type VentaCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * The data used to create many Ventas.
    */
   data: Prisma.VentaCreateManyInput | Prisma.VentaCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -2091,6 +1876,7 @@ export type VentaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many Ventas.
    */
   data: Prisma.VentaCreateManyInput | Prisma.VentaCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

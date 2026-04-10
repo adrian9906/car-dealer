@@ -75,6 +75,9 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
@@ -218,7 +221,6 @@ export const VentaScalarFieldEnum = {
   id_venta: 'id_venta',
   id_auto: 'id_auto',
   id_cliente: 'id_cliente',
-  id_empleado: 'id_empleado',
   fecha_venta: 'fecha_venta',
   precio_venta: 'precio_venta',
   forma_pago: 'forma_pago',
@@ -367,6 +369,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const NullsOrder = {

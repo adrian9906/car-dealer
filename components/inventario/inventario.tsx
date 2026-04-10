@@ -1,16 +1,9 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import {
   Select,
   SelectContent,
@@ -22,19 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Search,
-  Car,
-  Filter,
-  MapPin,
-  Ship,
-  Heart,
-  Eye,
-  Fuel,
-  Calendar,
-  Settings,
-  Star,
-} from "lucide-react";
+import { Car, Filter, Star } from "lucide-react";
 import Link from "next/link";
 import AutoCard from "./autoCard";
 import { useFavorites } from "@/hooks/useFavorites";

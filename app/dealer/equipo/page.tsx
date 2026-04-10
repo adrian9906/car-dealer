@@ -147,9 +147,9 @@ export default function TeamPage() {
                   internacional y la gestión de flotas premium.
                 </p>
               </div>
-              <div className="font-['Share_Tech_Mono'] text-secondary text-sm flex items-center gap-2">
+              <div className="font-['Share_Tech_Mono'] text-primary text-sm flex items-center gap-2">
                 <span>CONOCER AL EQUIPO</span>
-                <MoveUpRight className="w-4 h-4 text-secondary" />
+                <MoveUpRight className="w-4 h-4 text-primary" />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -164,7 +164,7 @@ export default function TeamPage() {
                 <h4 className="text-2xl font-bold tracking-tight">
                   Ricardo Valenzuela
                 </h4>
-                <p className="font-['Share_Tech_Mono'] text-secondary text-xs uppercase mt-2">
+                <p className="font-['Share_Tech_Mono'] text-primary text-xs uppercase mt-2">
                   Director de Importaciones (Europa &amp; USA)
                 </p>
               </div>
@@ -180,7 +180,7 @@ export default function TeamPage() {
                 <h4 className="text-2xl font-bold tracking-tight">
                   Sofía Conti
                 </h4>
-                <p className="font-['Share_Tech_Mono'] text-secondary text-xs uppercase mt-2">
+                <p className="font-['Share_Tech_Mono'] text-primary text-xs uppercase mt-2">
                   Gerente de Experiencia Premium y Alquiler
                 </p>
               </div>
@@ -196,7 +196,7 @@ export default function TeamPage() {
                 <h4 className="text-2xl font-bold tracking-tight">
                   Marc Janssen
                 </h4>
-                <p className="font-['Share_Tech_Mono'] text-secondary text-xs uppercase mt-2">
+                <p className="font-['Share_Tech_Mono'] text-primary text-xs uppercase mt-2">
                   Jefe de Logística Automotriz Global
                 </p>
               </div>

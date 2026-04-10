@@ -1,6 +1,10 @@
 "use server";
 
-import { Prisma, PrismaClient } from "../../app/generated/prisma/client";
+import {
+  FormaPago,
+  Prisma,
+  PrismaClient,
+} from "../../app/generated/prisma/client";
 
 import { Alquiler, PageParams } from "@/app/dealer/inventario/page";
 import { EstadoSolicitudImportacion } from "../import";
@@ -12,6 +16,7 @@ import {
 import { PriceExport } from "@/components/importacion/importForm";
 import { db } from "../db";
 import { ImportacionCliente } from "@/components/importacion/importList";
+import { ClienteForm } from "@/components/inventario/cotizar";
 
 type getImportParams = {
   q?: string;
@@ -469,4 +474,61 @@ export async function ApproveImportCar() {
     },
   });
   return autos;
+}
+
+export async function CreateVenta(
+  id_auto: string,
+  formaPago: FormaPago,
+  cliente: ClienteForm,
+) {
+  const autos = await db.auto.findFirst({
+    where: {
+      id_auto,
+    },
+  });
+  console.log(autos);
+  if (!autos) {
+    throw new EntityNotFound("El auto solicitado no existe");
+  }
+  let cliente2 = await db.cliente.findUnique({
+    where: { ci: cliente.ci },
+  });
+
+  if (!cliente2) {
+    // Solo crear si no existe
+    cliente2 = await db.cliente.create({
+      data: {
+        nombre: cliente.nombre,
+        email: cliente.email,
+        telefono: cliente.telefono,
+        tipo_cliente: cliente.tipo_cliente,
+        direccion: cliente.direccion,
+        ci: cliente.ci || "",
+        apellidos: cliente.apellidos,
+      },
+    });
+  }
+  const venta = await db.venta.create({
+    data: {
+      auto: {
+        // ← Usa la relación, no id_auto
+        connect: {
+          id_auto: autos.id_auto,
+        },
+      },
+      cliente: {
+        // ← Usa relación, no id_cliente
+        connect: { id_cliente: cliente2.id_cliente },
+      },
+      precio_venta: autos.precio_venta || 0,
+      forma_pago: formaPago,
+      impuestos: 100,
+      estado_venta: "COMPLETADA",
+      comision_vendedor: autos.precio_venta ? autos.precio_venta * 0.05 : 0,
+    },
+  });
+  if (!venta) {
+    throw new Error("No se pudo crear la venta");
+  }
+  return venta;
 }

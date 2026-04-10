@@ -52,12 +52,13 @@ export interface Alquiler {
 }
 
 export default async function InventoryPage({ searchParams }: PageParams) {
-  const vehicles: Vehicle[] = await getVehicles(searchParams);
+  const params = await searchParams;
+  const vehicles: Vehicle[] = await getVehicles(params);
   const brands = await getBrands();
   const modelos = await getModelos();
   const total = await getVehiclesTotal();
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background mt-15">
       <Inventory
         brands={brands}
         models={modelos}

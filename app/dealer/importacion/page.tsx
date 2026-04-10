@@ -14,16 +14,17 @@ export type PageProps = {
 };
 
 export default async function ImportPage({ searchParams }: PageProps) {
+  const params = await searchParams;
   //* Pagination
-  const page = parseInt(searchParams?.page ?? "1");
-  const limit = parseInt(searchParams?.limit ?? "10");
+  const page = parseInt(params?.page ?? "1");
+  const limit = parseInt(params?.limit ?? "10");
 
   //* Sort
-  const sort = searchParams?.sort ?? "id_importacion_cliente";
-  const dir = searchParams?.dir ?? "desc";
+  const sort = params?.sort ?? "id_importacion_cliente";
+  const dir = params?.dir ?? "desc";
 
   //* Filters
-  const globalSearch = searchParams?.q ?? "";
+  const globalSearch = params?.q ?? "";
 
   const { imports, total, pageCount } = await getImportData({
     q: globalSearch,
@@ -36,7 +37,7 @@ export default async function ImportPage({ searchParams }: PageProps) {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background mt-20">
       <div className="mt-5 px-9">
         <HeadingText
           heading="Importacón"
