@@ -6,7 +6,7 @@ import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "./providers";
-
+import { Analytics } from "@vercel/analytics/next";
 const shareTechMono = Share_Tech_Mono({
   weight: "400",
   subsets: ["latin"],
@@ -48,6 +48,7 @@ export default function RootLayout({
 
           <Providers>{children}</Providers>
           <Toaster />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
